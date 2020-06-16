@@ -1,6 +1,7 @@
 import React from "react";
 import UserConsole from "./UserConsole";
 import axios from 'axios';
+import SignUp from "./SignUp";
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
       </div>
 
       <button name="signUp"> Sign Up </button>
+      <SignUp/>
     </div>
   );
 };
