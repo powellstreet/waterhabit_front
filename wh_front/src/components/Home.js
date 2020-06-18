@@ -6,18 +6,27 @@ import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 
-const Home = () => {
+const Home = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   function goSignIn() {
     axios.post(`http://localhost:${process.env.REACT_APP_PORT}/user/signIn`, { email, password })
-      .then(res => console.log(res.data))
+      .then(res => {
+        console.log(res.data)
+        if(res.data.token){
+          // 받아온 token state로 저장하는 작업 필요
+          history.push('/userConsole')
+        } else {
+          alert('로그인 정보가 맞지 않습니다')
+        }
+      })
   }
 
   return (
     <div>
-      {/* <div>
+      <div>MAIN</div>
+      <div>
         <div>
           Email :
           <input
@@ -38,10 +47,10 @@ const Home = () => {
           ></input>
         </div>
         <button name="signIn" onClick={goSignIn}> Sign In </button>
-      </div> */}
+      </div>
 
-      <button name="signUp"> Sign Up </button>
-      <SignUp />
+      <button name="signUp" onClick={() => { history.push('/signUp')}}> Go Sign Up! </button>
+      {/* <SignUp /> */}
       {/* <UserConsole/> */}
     </div>
   );
