@@ -8,9 +8,9 @@ const UserConsole = () => {
     return (
         <div>
             UserConsole
-            <UserRecords/>
+            {/* <UserRecords/>
             <Profile/>
-            <WholeRecords/>
+            <WholeRecords/> */}
         </div>
     )
 }
