@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import dotenv from "dotenv";
 
+import store from "../store";
 import { chkEmail, chkPwd } from "../functions/verification";
 dotenv.config();
 
@@ -9,6 +11,10 @@ const SignUp = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
+
+  const { weight } = useSelector((state) => ({
+    weight: state.weight
+  }))
 
   function goSignUp() {
     if (!chkEmail(email)) {
@@ -37,6 +43,8 @@ const SignUp = ({ history }) => {
   return (
     <div>
       SIGN UP
+      {/* <div>Redux : {store.getState().weight}</div> */}
+      <div>Redux : {weight}</div>
       <div>
         Email :
         <input
@@ -55,6 +63,7 @@ const SignUp = ({ history }) => {
           placeholder="비밀번호를 입력하세요"
           onChange={(e) => setPassword(e.target.value)}
         ></input>
+        비밀번호는 8~20자 길이의 영문, 숫자, 특수문자를 조합해주세요
       </div>
       <div>
         Nickname :
