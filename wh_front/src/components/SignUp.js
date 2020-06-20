@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import dotenv from "dotenv";
 
-import store from "../store";
 import { chkEmail, chkPwd } from "../functions/verification";
 dotenv.config();
 
@@ -11,6 +10,8 @@ const SignUp = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
+
+  const dispatch = useDispatch();
 
   const { weight } = useSelector((state) => ({
     weight: state.weight

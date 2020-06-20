@@ -1,37 +1,54 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import dotenv from "dotenv";
 
 import UserRecords from "./UserRecords";
 import UserRecordsContainer from "../containers/UserRecordsContainer"
 import Profile from "./Profile";
 import WholeRecords from "./WholeRecords";
+dotenv.config();
 
 const UserConsole = ({ history }) => {
   const dispatch = useDispatch();
-  // goal 을 state로 받아와서 사용해야 함. 일단은 하드코딩
-  let { nickname, goal } = useSelector((state) => ({
+  let { nickname, intake, goal } = useSelector((state) => ({
     nickname: state.nickname,
+    intake: state.intake,
     goal: state.goal,
   }))
 
-  const [intake, setIntake] = useState(0);
-  const [totalIntake, setTotalIntake] = useState(0);
+  const [addIntake, setAddIntake] = useState(0);
 
-  const ratio = Math.floor(totalIntake / goal * 100);
+  const ratio = Math.floor(intake / goal * 100);
+
+  function updateTotalIntake(){
+    let updatedTotal = Number(intake) + Number(addIntake);
+    if(updatedTotal >= goal ){
+      console.log('목표를 달성했습니다')
+    }
+    axios.post(`http://localhost:${process.env.REACT_APP_PORT}/user/intakeUpdate`, { intake: updatedTotal })
+      .then(res => { 
+        console.log(res.data)
+        dispatch({type: 'intake', intake: updatedTotal})
+      })
+    
+  }
 
   return (
-    <div>
+    <div style={{ backgroundColor: 'skyblue', width : `${ratio}%`, height: '100%'}}>
+
+    {/* <div> */}
       UserConsole
       <div>{nickname}님 안녕하세요! </div>
       <div>물 추가하기
-          <input name="addWater" type="text" placeholder="물한잔" onChange={(e) => setIntake(e.target.value)}></input>
-          <button name="addWaterBtn" onClick={() => setTotalIntake(Number(totalIntake) + Number(intake))}>추가</button>
+          <input name="addWater" type="text" placeholder="물한잔" onChange={(e) => setAddIntake(e.target.value)}></input>
+          <button name="addWaterBtn" onClick={updateTotalIntake}>추가</button>
       </div>
       <div>
           오늘의 목표 : {goal} ml
       </div>
       <div>
-          현재까지 마신 물 : {totalIntake} ml
+          현재까지 마신 물 : {intake} ml
       </div>
       <div>
           오늘의 목표 달성률 : {ratio} %
@@ -45,11 +62,12 @@ const UserConsole = ({ history }) => {
           <button name="goUserRecords" onClick={() => history.push('/userRecords')}>My Record</button>
       </div>
 
-      <div>
-        <button name="test" onClick={() => dispatch({ type: 'goal', goal: 777})}>칠칠칠로 바꿔보자</button>
-      </div>
+      {/* <div style={{ backgroundColor: 'skyblue', height : `${intake / goal * 100 }%`, width: '100%'}}>
+        yoyo
+      </div> */}
 
     </div>
+
   );
 };
 

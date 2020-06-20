@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import dotenv from "dotenv";
 
-import store from "../store";
-
 dotenv.config();
 
 const Home = ({ history }) => {
