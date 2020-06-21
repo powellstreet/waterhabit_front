@@ -35,9 +35,8 @@ const UserConsole = ({ history }) => {
   }
 
   return (
-    <div style={{ backgroundColor: 'skyblue', width : `${ratio}%`, height: '100%'}}>
 
-    {/* <div> */}
+    <div>
       UserConsole
       <div>{nickname}님 안녕하세요! </div>
       <div>물 추가하기
@@ -61,10 +60,12 @@ const UserConsole = ({ history }) => {
       <div>
           <button name="goUserRecords" onClick={() => history.push('/userRecords')}>My Record</button>
       </div>
+      <div>
+        <button name="goWholeRecords" onClick={() => history.push('/wholeRecords')}>Whole Records</button>
+      </div>
+      
+      <div style={{ backgroundColor: 'skyblue', width : `${ratio}%`, height: 100}}></div>
 
-      {/* <div style={{ backgroundColor: 'skyblue', height : `${intake / goal * 100 }%`, width: '100%'}}>
-        yoyo
-      </div> */}
 
     </div>
 

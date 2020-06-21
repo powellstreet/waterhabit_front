@@ -1,32 +1,27 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-// const UserRecords = ({ props, history }) => {
-//   return (
-//     <div>
-//       UserRecords
-//       <div>
-//         <div>token : {props.token}</div>
-//         <button
-//           name="goUserConsole"
-//           onClick={() => history.push('/profile')}
-//         >
-//           Go Profile!
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
+const UserRecords = ({ history }) => {
+  const { nickname, stamp } = useSelector((state) => ({
+    nickname: state.nickname,
+    stamp: state.stamp
+  }))
 
-// export default UserRecords;
-
-export default class UserRecords extends React.Component {
-  render(){
-    return(
+  return (
+    <div>
+      UserRecords
       <div>
-        token : {this.props.token}
+        <div>{nickname}님 화이팅입니다</div>
+        <div>stamps : {stamp}</div>
+        <button
+          name="goUserConsole"
+          onClick={() => history.push('/userConsole')}
+        >
+          Go UserConsole!
+        </button>
       </div>
-    )
-  }
-}
+    </div>
+  );
+};
 
-// class 에서는 mapStateToProps 를 사용하는데, hooks에서는 useSelector가 그 역할을 대신 해주는듯?
+export default UserRecords;
