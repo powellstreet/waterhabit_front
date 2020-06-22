@@ -39,9 +39,9 @@ export default createStore((state, action) => {
             point: action.point
         })
     }
-    if(action.type === 'stamp'){
+    if(action.type === 'day'){
         return Object.assign({}, state, {
-            stamp: action.stamp
+            day: action.day
         })
     }
     return state;

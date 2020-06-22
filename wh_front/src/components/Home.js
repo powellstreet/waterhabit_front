@@ -28,7 +28,7 @@ const Home = ({ history }) => {
           dispatch({ type: "nickname", nickname: instance.nickname });
           dispatch({ type: "point", point: instance.point });
           dispatch({ type: "weight", weight: instance.weight });
-          dispatch({ type: "stamp", stamp: instance.stamp });
+          dispatch({ type: "day", day: instance.day });
           history.push("/userConsole");
         } else {
           alert("로그인 정보가 맞지 않습니다");

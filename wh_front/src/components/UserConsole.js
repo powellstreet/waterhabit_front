@@ -21,7 +21,7 @@ const UserConsole = ({ history }) => {
 
   const ratio = Math.floor(intake / goal * 100);
 
-  function updateTotalIntake(){
+  const updateTotalIntake = () => {
     let updatedTotal = Number(intake) + Number(addIntake);
     if(updatedTotal >= goal ){
       console.log('목표를 달성했습니다')
@@ -30,8 +30,12 @@ const UserConsole = ({ history }) => {
       .then(res => { 
         console.log(res.data)
         dispatch({type: 'intake', intake: updatedTotal})
-      })
-    
+      }) 
+  };
+
+  const updateStamp = () => {
+    axios.post(`http://localhost:${process.env.REACT_APP_PORT}/records/updateStamp`, {})
+      .then(res => console.log(res.data))
   }
 
   return (
@@ -66,6 +70,10 @@ const UserConsole = ({ history }) => {
       
       <div style={{ backgroundColor: 'skyblue', width : `${ratio}%`, height: 100}}></div>
 
+
+      <div>
+        <button name="goWholeRecords" onClick={updateStamp}>updateStamp test!</button>
+      </div>
 
     </div>
 
