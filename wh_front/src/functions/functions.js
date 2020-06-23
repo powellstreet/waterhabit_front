@@ -1,10 +1,13 @@
-function chkEmail(str) {
+// import React from 'react';
+// import { useDispatch, useSelector } from "react-redux";
+
+const chkEmail = (str) => {
   let regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
   return !regExp.test(str) ? false : true;
-}
+};
 
-function chkPwd(str) {
+const chkPwd = (str) => {
   var pw = str;
   var num = pw.search(/[0-9]/g);
   var eng = pw.search(/[a-z]/gi);
@@ -26,9 +29,17 @@ function chkPwd(str) {
   // }
 
   return true;
+};
+
+const dayCounter = (startDay) => {
+  const oneDay = 24 * 60 * 60 * 1000; 
+  const todayObj = new Date();
+  const today = new Date(todayObj.getFullYear(), todayObj.getMonth() + 1, todayObj.getDate());
+  return Math.round(Math.abs((startDay - today) / oneDay) + 1);
 }
 
 module.exports = {
   chkEmail,
   chkPwd,
+  dayCounter,
 };

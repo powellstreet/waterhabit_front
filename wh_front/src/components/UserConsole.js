@@ -7,14 +7,16 @@ import UserRecords from "./UserRecords";
 import UserRecordsContainer from "../containers/UserRecordsContainer"
 import Profile from "./Profile";
 import WholeRecords from "./WholeRecords";
+
 dotenv.config();
 
 const UserConsole = ({ history }) => {
   const dispatch = useDispatch();
-  let { nickname, intake, goal } = useSelector((state) => ({
+  let { nickname, intake, goal, day } = useSelector((state) => ({
     nickname: state.nickname,
     intake: state.intake,
     goal: state.goal,
+    day: state.day,
   }))
 
   const [addIntake, setAddIntake] = useState(0);
@@ -26,7 +28,7 @@ const UserConsole = ({ history }) => {
     if(updatedTotal >= goal ){
       console.log('목표를 달성했습니다')
     }
-    axios.post(`http://localhost:${process.env.REACT_APP_PORT}/user/intakeUpdate`, { intake: updatedTotal })
+    axios.post(`http://localhost:${process.env.REACT_APP_PORT}/user/intakeUpdate`, { intake: updatedTotal, day })
       .then(res => { 
         console.log(res.data)
         dispatch({type: 'intake', intake: updatedTotal})
@@ -34,7 +36,7 @@ const UserConsole = ({ history }) => {
   };
 
   const updateStamp = () => {
-    axios.post(`http://localhost:${process.env.REACT_APP_PORT}/records/updateStamp`, {})
+    axios.post(`http://localhost:${process.env.REACT_APP_PORT}/records/updateStamp`, { day: String(day) })
       .then(res => console.log(res.data))
   }
 
@@ -42,7 +44,7 @@ const UserConsole = ({ history }) => {
 
     <div>
       UserConsole
-      <div>{nickname}님 안녕하세요! </div>
+      <h2>{nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다! </h2>
       <div>물 추가하기
           <input name="addWater" type="text" placeholder="물한잔" onChange={(e) => setAddIntake(e.target.value)}></input>
           <button name="addWaterBtn" onClick={updateTotalIntake}>추가</button>
