@@ -12,11 +12,12 @@ dotenv.config();
 
 const UserConsole = ({ history }) => {
   const dispatch = useDispatch();
-  let { nickname, intake, goal, day } = useSelector((state) => ({
+  let { nickname, intake, goal, day, userId } = useSelector((state) => ({
     nickname: state.nickname,
     intake: state.intake,
     goal: state.goal,
     day: state.day,
+    userId: state.userId
   }))
 
   const [addIntake, setAddIntake] = useState(0);
@@ -45,6 +46,7 @@ const UserConsole = ({ history }) => {
     <div>
       UserConsole
       <h2>{nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다! </h2>
+      <div>userId : {userId}</div>
       <div>물 추가하기
           <input name="addWater" type="text" placeholder="물한잔" onChange={(e) => setAddIntake(e.target.value)}></input>
           <button name="addWaterBtn" onClick={updateTotalIntake}>추가</button>

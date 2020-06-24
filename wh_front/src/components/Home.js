@@ -26,9 +26,9 @@ const Home = ({ history }) => {
           let month = Number(instance.createdAt.substring(5,7));  
           let date = Number(instance.createdAt.substring(8,10))
           const startDay = new Date(year, month, date);
-          console.log('this is startday : ', startDay)
-
+          
           dispatch({ type: "token", token: res.data.token });
+          dispatch({ type: "userId", userId: instance.id });
           dispatch({ type: "goal", goal: instance.goal });
           dispatch({ type: "intake", intake: instance.intake });
           dispatch({ type: "likes", likes: instance.likes });

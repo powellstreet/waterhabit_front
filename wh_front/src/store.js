@@ -4,6 +4,11 @@ export default createStore((state, action) => {
     if(state === undefined){
         return {}
     }
+    if(action.type === 'userId'){
+        return Object.assign({}, state, {
+            userId: action.userId
+        })
+    }
     if(action.type === 'token'){
         return Object.assign({}, state, {
             token: action.token

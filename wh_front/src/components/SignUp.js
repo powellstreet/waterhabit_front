@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import dotenv from "dotenv";
 
-import { chkEmail, chkPwd, dayCounter } from "../functions/functions";
+import { chkEmail, chkPwd } from "../functions/functions";
 dotenv.config();
 
 const SignUp = ({ history }) => {
@@ -15,10 +15,8 @@ const SignUp = ({ history }) => {
 
   const { weight } = useSelector((state) => ({
     weight: state.weight
-  }))
 
-  const d1 = new Date(2020, 6, 1);
-  const d2 = new Date();
+  }))
 
   function goSignUp() {
     if (!chkEmail(email)) {
@@ -91,9 +89,7 @@ const SignUp = ({ history }) => {
       </button>
 
 
-      <button name="submit" onClick={() => console.log(dayCounter(d1))  }>
-        Daycounter
-      </button>
+
     </div>
   );
 };
