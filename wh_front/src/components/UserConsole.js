@@ -2,12 +2,6 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import dotenv from "dotenv";
-
-import UserRecords from "./UserRecords";
-import UserRecordsContainer from "../containers/UserRecordsContainer"
-import Profile from "./Profile";
-import WholeRecords from "./WholeRecords";
-
 dotenv.config();
 
 const UserConsole = ({ history }) => {
@@ -28,6 +22,7 @@ const UserConsole = ({ history }) => {
     let updatedTotal = Number(intake) + Number(addIntake);
     if(updatedTotal >= goal ){
       console.log('목표를 달성했습니다')
+      updateStamp();
     }
     axios.post(`http://localhost:${process.env.REACT_APP_PORT}/user/intakeUpdate`, { intake: updatedTotal, day })
       .then(res => { 

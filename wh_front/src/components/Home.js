@@ -81,29 +81,8 @@ const Home = ({ history }) => {
         {" "}
         Go Sign Up!{" "}
       </button>
-      {/* <button name="test" onClick={() => {
-        store.dispatch({type:'weight', weight })
-      }}> Go Redux Test! </button> */}
-
-      {/* <button name="test" onClick={() => {
-        dispatch({ type : 'weight', weight : 9999})
-      }} > Dispatch Redux! </button>
-      
-      <button name="test" onClick={() => {
-        store.dispatch({type:'weight', weight : weight + 10 })
-      }}> Plus 10 Redux! </button> */}
-
-      {/* <SignUp /> */}
-      {/* <UserConsole/> */}
     </div>
   );
-};
-
-const mapStateToProps = (state) => {
-  return {
-    number: state.counter.number,
-    color: state.ui.color,
-  };
 };
 
 export default Home;

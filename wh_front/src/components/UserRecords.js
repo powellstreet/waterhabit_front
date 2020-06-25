@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import dotenv from "dotenv";
-
-import WholeRecords from './WholeRecords';
+import Stamp from './Stamp';
 
 dotenv.config();
 
 const UserRecords = ({ history }) => {
   const [records, setRecords] = useState([]);
+  const [yesDays, setYesDays] = useState(0);
 
   const { userId, nickname, stamp } = useSelector((state) => ({
     userId: state.userId,
@@ -19,14 +19,12 @@ const UserRecords = ({ history }) => {
   useEffect(() => {
     axios.post(`http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`, { userId })
       .then((res) => {
-        let rc = [];
-        res.data.forEach((el) => { rc[Number(el.day) - 1] = true })
+        let rc = []; rc.length = 100; rc.fill(0);
+        res.data.forEach((el) => { rc[Number(el.day) - 1] = 1 })
         setRecords(rc);
+        setYesDays(res.data.length);
       });
   }, [])
-
-  console.log('these are records : ', records)
-  let test = [3, 1, 2, 5];
 
   return (
     <div>
@@ -41,10 +39,11 @@ const UserRecords = ({ history }) => {
           Go UserConsole!
         </button>
       </div>
+      <div>성공률 : {yesDays} % </div>
       {
-        test.map((el, idx) => (
-          <div key={idx}> {String(el)}</div>
-        ))
+        records.map((el, idx) => {
+          return el === 1 ?  (<div key={idx}>{idx + 1} : ㅎㅎㅎ</div>) : (<div key={idx}>{idx + 1} : ㅜㅜㅜ</div>)
+        })
       }
 
     </div>
