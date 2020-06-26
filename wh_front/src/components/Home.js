@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import dotenv from "dotenv";
-import { dayCounter } from "../functions/functions";
+import { dayCounter, toDate } from "../functions/functions";
 
 dotenv.config();
 
@@ -22,11 +22,7 @@ const Home = ({ history }) => {
         console.log(res.data);
         const instance = res.data.instance;
         if (res.data.token) {
-          let year = Number(instance.createdAt.substring(0,4));
-          let month = Number(instance.createdAt.substring(5,7));  
-          let date = Number(instance.createdAt.substring(8,10))
-          const startDay = new Date(year, month, date);
-          
+          // const startDay = toDate(instance.createdAt);
           dispatch({ type: "token", token: res.data.token });
           dispatch({ type: "userId", userId: instance.id });
           dispatch({ type: "goal", goal: instance.goal });
@@ -35,13 +31,14 @@ const Home = ({ history }) => {
           dispatch({ type: "nickname", nickname: instance.nickname });
           dispatch({ type: "point", point: instance.point });
           dispatch({ type: "weight", weight: instance.weight });
-          dispatch({ type: "day", day: dayCounter(startDay) });
+          dispatch({ type: "day", day: dayCounter(toDate(instance.createdAt)) });
           history.push("/userConsole");
         } else {
           alert("로그인 정보가 맞지 않습니다");
         }
       });
   }
+
 
   return (
     <div>

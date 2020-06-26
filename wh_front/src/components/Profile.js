@@ -8,10 +8,11 @@ dotenv.config();
 const Profile = ({ history }) => {
   const dispatch = useDispatch();
 
-  let { nickname, weight, goal } = useSelector((state) => ({
+  let { nickname, weight, goal, userId } = useSelector((state) => ({
     nickname: state.nickname,
     weight: state.weight,
-    goal: state.goal
+    goal: state.goal,
+    userId: state.userId,
   }))
 
   const [nicknameValue, setNicknameValue] = useState("");
@@ -21,6 +22,7 @@ const Profile = ({ history }) => {
 
   function profileUpdate(){
     axios.post(`http://localhost:${process.env.REACT_APP_PORT}/user/profileUpdate`, { 
+      userId,
       nickname: nicknameValue, 
       weight: weightValue, 
       goal: goalValue 

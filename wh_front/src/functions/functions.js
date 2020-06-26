@@ -36,10 +36,19 @@ const dayCounter = (startDay) => {
   const todayObj = new Date();
   const today = new Date(todayObj.getFullYear(), todayObj.getMonth() + 1, todayObj.getDate());
   return Math.round(Math.abs((startDay - today) / oneDay) + 1);
+};
+
+const toDate = (val) => {
+  let year = Number(val.substring(0,4));
+  let month = Number(val.substring(5,7));  
+  let date = Number(val.substring(8,10));
+
+  return new Date(year, month, date);
 }
 
 module.exports = {
   chkEmail,
   chkPwd,
   dayCounter,
+  toDate,
 };
