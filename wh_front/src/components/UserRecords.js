@@ -19,10 +19,16 @@ const UserRecords = ({ history }) => {
   useEffect(() => {
     axios.post(`http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`, { userId })
       .then((res) => {
+        // let rc = []; rc.length = 100; rc.fill(0);
+        // res.data.forEach((el) => { rc[Number(el.day) - 1] = 1 })
+        // setRecords(rc);
+        // setYesDays(res.data.length);
+        // console.log(rc)
         let rc = []; rc.length = 100; rc.fill(0);
-        res.data.forEach((el) => { rc[Number(el.day) - 1] = 1 })
+        res.data.forEach((el) => { rc[Number(el.day) - 1] = el.intake })
         setRecords(rc);
         setYesDays(res.data.length);
+        console.log(rc)
       });
   }, [])
 
@@ -41,8 +47,11 @@ const UserRecords = ({ history }) => {
       </div>
       <div>성공률 : {yesDays} % </div>
       {
+        // records.map((el, idx) => {
+        //   return el === 1 ?  (<div key={idx}>{idx + 1} : ㅎㅎㅎ</div>) : (<div key={idx}>{idx + 1} : ㅜㅜㅜ</div>)
+        // })
         records.map((el, idx) => {
-          return el === 1 ?  (<div key={idx}>{idx + 1} : ㅎㅎㅎ</div>) : (<div key={idx}>{idx + 1} : ㅜㅜㅜ</div>)
+          return <div key={idx}>{el}</div>
         })
       }
 
