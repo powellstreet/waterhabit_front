@@ -10,10 +10,11 @@ const UserRecords = ({ history }) => {
   const [records, setRecords] = useState([]);
   const [yesDays, setYesDays] = useState(0);
 
-  const { userId, nickname, stamp } = useSelector((state) => ({
+  const { userId, nickname, stamp, goal } = useSelector((state) => ({
     userId: state.userId,
     nickname: state.nickname,
     stamp: state.stamp,
+    goal: state.goal,
   }))
 
   useEffect(() => {
@@ -47,11 +48,8 @@ const UserRecords = ({ history }) => {
       </div>
       <div>성공률 : {yesDays} % </div>
       {
-        // records.map((el, idx) => {
-        //   return el === 1 ?  (<div key={idx}>{idx + 1} : ㅎㅎㅎ</div>) : (<div key={idx}>{idx + 1} : ㅜㅜㅜ</div>)
-        // })
         records.map((el, idx) => {
-          return <div key={idx}>{el}</div>
+          return el >= goal ? <div key={idx}>{el}</div> : <div key={idx}>{el}</div>;
         })
       }
 

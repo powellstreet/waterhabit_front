@@ -1,15 +1,38 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  Button,
+  Typography,
+  TextField,
+  Container,
+  CssBaseline,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
 import axios from "axios";
 import dotenv from "dotenv";
 import { dayCounter, toDate } from "../functions/functions";
-
 dotenv.config();
 
+const useStyles = makeStyles((theme) => ({
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+}));
+
 const Home = ({ history }) => {
+  const classes = useStyles();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const dispatch = useDispatch();
 
   function goSignIn() {
@@ -22,7 +45,6 @@ const Home = ({ history }) => {
         console.log(res.data);
         const instance = res.data.instance;
         if (res.data.token) {
-          // const startDay = toDate(instance.createdAt);
           dispatch({ type: "token", token: res.data.token });
           dispatch({ type: "userId", userId: instance.id });
           dispatch({ type: "goal", goal: instance.goal });
@@ -31,7 +53,10 @@ const Home = ({ history }) => {
           dispatch({ type: "nickname", nickname: instance.nickname });
           dispatch({ type: "point", point: instance.point });
           dispatch({ type: "weight", weight: instance.weight });
-          dispatch({ type: "day", day: dayCounter(toDate(instance.createdAt)) });
+          dispatch({
+            type: "day",
+            day: dayCounter(toDate(instance.createdAt)),
+          });
           history.push("/userConsole");
         } else {
           alert("로그인 정보가 맞지 않습니다");
@@ -39,46 +64,75 @@ const Home = ({ history }) => {
       });
   }
 
-
   return (
-    <div>
-      <div>MAIN</div>
-      <div>
-        <div>
-          Email :
-          <input
-            type="text"
-            name="id"
-            placeholder="아이디를 입력하세요"
-            autoFocus
-            onChange={(e) => setEmail(e.target.value)}
-          ></input>
-        </div>
-        <div>
-          Password :
-          <input
-            type="password"
-            name="password"
-            placeholder="비밀번호를 입력하세요"
-            onChange={(e) => setPassword(e.target.value)}
-          ></input>
-        </div>
-        <button name="signIn" onClick={goSignIn}>
-          {" "}
-          Sign In{" "}
-        </button>
-      </div>
+    <Container maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography
+          component="h1"
+          variant="h5"
+          color="textPrimary"
+          align="center"
+        >
+          WATERHABIT MAIN
+        </Typography>
+        <form className={classes.form}>
+          <div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              name="email"
+              label="이메일을 입력하세요"
+              // autoComplete="email"
+              autoFocus
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              type="password"
+              required
+              fullWidth
+              id="password"
+              name="password"
+              label="비밀번호를 입력하세요"
+              autoComplete="password"
+              autoFocus
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-      <button
-        name="signUp"
-        onClick={() => {
-          history.push("/signUp");
-        }}
-      >
-        {" "}
-        Go Sign Up!{" "}
-      </button>
-    </div>
+          <div align="center">
+            <Button
+              name="signIn"
+              color="primary"
+              onClick={goSignIn}
+              variant="outlined"
+            >
+              {" "}
+              Sign In{" "}
+            </Button>
+
+            <Button
+              name="signUp"
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                history.push("/signUp");
+              }}
+            >
+              {" "}
+              Go Sign Up!{" "}
+            </Button>
+          </div>
+        </form>
+      </div>
+    </Container>
   );
 };
 
