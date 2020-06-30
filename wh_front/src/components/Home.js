@@ -102,7 +102,6 @@ const Home = ({ history }) => {
               name="password"
               label="비밀번호를 입력하세요"
               autoComplete="password"
-              autoFocus
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
