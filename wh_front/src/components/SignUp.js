@@ -94,7 +94,8 @@ const SignUp = ({ history }) => {
               margin="normal"
               id="email"
               type="text"
-              label="이메일을 입력하세요"
+              label="이메일"
+              placeholder="이메일을 입력하세요"
               autoFocus
               required
               fullWidth
@@ -118,7 +119,8 @@ const SignUp = ({ history }) => {
               required
               fullWidth
               id="password"
-              label="비밀번호를 입력하세요"
+              label="비밀번호"
+              placeholder="비밀번호를 입력하세요"
               onChange={(e) => setPassword(e.target.value)}
               InputProps={{
                 startAdornment: (
@@ -147,7 +149,8 @@ const SignUp = ({ history }) => {
               margin="normal"
               id="nickname"
               type="text"
-              label="닉네임을 입력하세요"
+              label="닉네임"
+              placeholder="닉네임을 입력하세요"
               required
               fullWidth
               onChange={(e) => setNickname(e.target.value)}

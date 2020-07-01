@@ -74,7 +74,7 @@ const Home = ({ history }) => {
   }
 
   return (
-    <Container maxWidth="xs">
+    <Container maxWidth="xs" >
       <CssBaseline />
       <div className={classes.paper}>
         <Typography
@@ -157,7 +157,7 @@ const Home = ({ history }) => {
               }}
             >
               {" "}
-              Go Sign Up!{" "}
+              Sign Up{" "}
             </Button>
           </div>
         </form>
