@@ -6,7 +6,15 @@ import {
   TextField,
   Container,
   CssBaseline,
+  InputAdornment,
+  FormHelperText,
 } from "@material-ui/core";
+import {
+  AccountCircle,
+  LockOpen,
+  Visibility,
+  VisibilityOff,
+} from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
 import axios from "axios";
@@ -77,12 +85,11 @@ const Profile = ({ history }) => {
             <TextField
               variant="outlined"
               margin="normal"
-              // required
               fullWidth
               id="nickname"
               name="nickname"
-              label={`현재 닉네임 : ${nickname}`}
-              // autoComplete="email"
+              label="닉네임"
+              defaultValue={nickname}
               autoFocus
               onChange={(e) => setNicknameValue(e.target.value)}
             />
@@ -91,55 +98,42 @@ const Profile = ({ history }) => {
             <TextField
               variant="outlined"
               margin="normal"
-              // required
               fullWidth
               id="weight"
               name="weight"
-              label={`현재 몸무게 : ${weight}`}
-              // autoComplete="email"
+              label="체중"
+              type="number"
+              defaultValue={weight}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">kg</InputAdornment>
+                ),
+              }}
               onChange={(e) => setWeightValue(e.target.value)}
             />
-            <div>
-              * WHO 추천 일일섭취량 : {weightValue * 30} ml
-              <Button
-                name="goWHO"
-                variant="outlined"
-                color="primary"
-                onClick={() => {
-                  setGoalValue(weightValue * 30);
-                }}
-              >
-                추천대로 고!
-              </Button>
-            </div>
           </div>
 
           <div>
             <TextField
+              type="number"
               variant="outlined"
               margin="normal"
-              // required
               fullWidth
               id="goal"
               name="goal"
-              label={`현재 목표량 : ${goal}`}
-              value={goalValue}
-              // autoComplete="email"
+              label="목표량"
+              defaultValue={goal}
               onChange={(e) => setGoalValue(e.target.value)}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">ml</InputAdornment>
+                ),
+              }}
             />
+            <FormHelperText id="standard-weight-helper-text">
+              * 체중에 따른 WHO 추천 일일섭취량 : {weight * 30} ml
+            </FormHelperText>
           </div>
-
-          {/* <div>
-          Goal :
-          <input
-            name="goal"
-            type="text"
-            placeholder={goalValue}
-            value={goalValue}
-            onChange={(e) => setGoalValue(e.target.value)}
-          ></input>{" "}
-          ml
-        </div> */}
 
           <Button
             name="submit"

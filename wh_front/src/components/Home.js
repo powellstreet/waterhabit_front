@@ -7,11 +7,9 @@ import {
   Container,
   CssBaseline,
   InputAdornment,
-  IconButton,
-  Input,
 } from "@material-ui/core";
 import {
-  AccountCircle,
+  Email,
   LockOpen,
   Visibility,
   VisibilityOff,
@@ -101,7 +99,7 @@ const Home = ({ history }) => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <AccountCircle />
+                    <Email />
                   </InputAdornment>
                 ),
               }}
