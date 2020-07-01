@@ -1,22 +1,55 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  Button,
+  Typography,
+  TextField,
+  Container,
+  CssBaseline,
+  InputAdornment,
+  FormHelperText,
+} from "@material-ui/core";
+import {
+  Email,
+  Face,
+  LockOpen,
+  Visibility,
+  VisibilityOff,
+} from "@material-ui/icons";
+import { makeStyles } from "@material-ui/core/styles";
+import "fontsource-roboto";
+
 import axios from "axios";
 import dotenv from "dotenv";
 
 import { chkEmail, chkPwd } from "../functions/functions";
 dotenv.config();
 
+const useStyles = makeStyles((theme) => ({
+  form: {
+    width: "100%",
+    marginTop: theme.spacing(1),
+  },
+  paper: {
+    marginTop: theme.spacing(8),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+}));
+
 const SignUp = ({ history }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   const { weight } = useSelector((state) => ({
-    weight: state.weight
-
-  }))
+    weight: state.weight,
+  }));
 
   function goSignUp() {
     if (!chkEmail(email)) {
@@ -43,54 +76,115 @@ const SignUp = ({ history }) => {
   }
 
   return (
-    <div>
-      SIGN UP
-      {/* <div>Redux : {store.getState().weight}</div> */}
-      <div>Redux : {weight}</div>
-      <div>
-        Email :
-        <input
-          name="email"
-          type="text"
-          placeholder="이메일을 입력하세요"
-          autoFocus
-          onChange={(e) => setEmail(e.target.value)}
-        ></input>
-      </div>
-      <div>
-        Password :
-        <input
-          name="password"
-          type="password"
-          placeholder="비밀번호를 입력하세요"
-          onChange={(e) => setPassword(e.target.value)}
-        ></input>
-        비밀번호는 8~20자 길이의 영문, 숫자, 특수문자를 조합해주세요
-      </div>
-      <div>
-        Nickname :
-        <input
-          name="nickname"
-          type="text"
-          placeholder="닉네임을 입력하세요"
-          onChange={(e) => setNickname(e.target.value)}
-        ></input>
-      </div>
-      <button name="submit" onClick={goSignUp}>
-        Sign Up
-      </button>
-      <button
-        name="submit"
-        onClick={() => {
-          history.push("/");
-        }}
-      >
-        Go Main!
-      </button>
+    <Container maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography
+          component="h1"
+          variant="h5"
+          color="textPrimary"
+          align="center"
+        >
+          SIGN UP
+        </Typography>
+        <form className={classes.form}>
+          <div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              id="email"
+              type="text"
+              label="이메일을 입력하세요"
+              autoFocus
+              required
+              fullWidth
+              autoComplete="password"
+              onChange={(e) => setEmail(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Email />
+                  </InputAdornment>
+                ),
+              }}
+            ></TextField>
+          </div>
 
+          <div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              type={showPassword ? "text" : "password"}
+              required
+              fullWidth
+              id="password"
+              label="비밀번호를 입력하세요"
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOpen />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment
+                    position="end"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </InputAdornment>
+                ),
+              }}
+            ></TextField>
+            <FormHelperText id="standard-weight-helper-text">
+              * 비밀번호는 8~20자 길이의 영문, 숫자, 특수문자를 조합해주세요
+            </FormHelperText>
+          </div>
 
+          <div>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              id="nickname"
+              type="text"
+              label="닉네임을 입력하세요"
+              required
+              fullWidth
+              onChange={(e) => setNickname(e.target.value)}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <Face />
+                  </InputAdornment>
+                ),
+              }}
+            ></TextField>
+          </div>
 
-    </div>
+          <div align="center">
+            <Button
+              name="submit"
+              variant="outlined"
+              color="primary"
+              onClick={goSignUp}
+            >
+              Sign Up
+            </Button>
+
+            <Button
+              name="submit"
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                history.push("/");
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </form>
+      </div>
+    </Container>
   );
 };
 
