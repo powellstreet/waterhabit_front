@@ -6,8 +6,18 @@ import {
   TextField,
   Container,
   CssBaseline,
+  InputAdornment,
+  IconButton,
+  Input,
 } from "@material-ui/core";
+import {
+  AccountCircle,
+  LockOpen,
+  Visibility,
+  VisibilityOff,
+} from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
+import "fontsource-roboto";
 
 import axios from "axios";
 import dotenv from "dotenv";
@@ -32,6 +42,7 @@ const Home = ({ history }) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -87,6 +98,13 @@ const Home = ({ history }) => {
               name="email"
               label="이메일을 입력하세요"
               // autoComplete="email"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <AccountCircle />
+                  </InputAdornment>
+                ),
+              }}
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -95,13 +113,28 @@ const Home = ({ history }) => {
             <TextField
               variant="outlined"
               margin="normal"
-              type="password"
+              type={showPassword ? "text" : "password"}
               required
               fullWidth
               id="password"
               name="password"
               label="비밀번호를 입력하세요"
               autoComplete="password"
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <LockOpen />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment
+                    position="end"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </InputAdornment>
+                ),
+              }}
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
