@@ -138,7 +138,7 @@ const SignUp = ({ history }) => {
                 ),
               }}
             ></TextField>
-            <FormHelperText id="standard-weight-helper-text">
+            <FormHelperText id="password">
               * 비밀번호는 8~20자 길이의 영문, 숫자, 특수문자를 조합해주세요
             </FormHelperText>
           </div>
@@ -149,7 +149,7 @@ const SignUp = ({ history }) => {
               margin="normal"
               id="nickname"
               type="text"
-              label="닉네임"
+              label="닉네임을 입력하세요"
               placeholder="닉네임을 입력하세요"
               required
               fullWidth

@@ -6,9 +6,12 @@ import {
   Typography,
   TextField,
   CssBaseline,
+  AppBar,
+  Toolbar,
+  IconButton,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {} from "@material-ui/icons";
+import { Menu } from "@material-ui/icons";
 
 import axios from "axios";
 import dotenv from "dotenv";
@@ -21,10 +24,21 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 const UserConsole = ({ history }) => {
   const dispatch = useDispatch();
+  const classes = useStyles();
+
   let { nickname, intake, goal, day, userId, updated } = useSelector(
     (state) => ({
       nickname: state.nickname,
@@ -37,7 +51,6 @@ const UserConsole = ({ history }) => {
 
   const [addIntake, setAddIntake] = useState(0);
 
-  const classes = useStyles();
   const ratio = Math.floor((intake / goal) * 100);
 
   const updateTotalIntake = () => {
@@ -76,12 +89,25 @@ const UserConsole = ({ history }) => {
       )
       // .then((res) => console.log(res.data))
       .then((res) =>
-        dispatch({ type: "intake", intake: res.data.instance.intake })
+        // userConsole 할때만 잠깐 수정!
+        // dispatch({ type: "intake", intake: res.data.instance.intake })
+        dispatch({ type: "intake", intake: 0 })
       );
   }, []);
 
   return (
-    <Container>
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton className={classes.menuButton}>
+            <Menu></Menu>
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            100일간의 물마시기 습관, WaterHabit
+          </Typography>
+          <Button color="inherit"> Sign Out </Button>
+        </Toolbar>
+      </AppBar>
       <CssBaseline />
       <div className={classes.paper}>
         <Typography
@@ -146,7 +172,7 @@ const UserConsole = ({ history }) => {
           }}
         ></div>
       </div>
-    </Container>
+    </div>
   );
 };
 
