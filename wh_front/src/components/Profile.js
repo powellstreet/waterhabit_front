@@ -8,12 +8,16 @@ import {
   CssBaseline,
   InputAdornment,
   FormHelperText,
+  AppBar,
+  Toolbar,
+  IconButton,
 } from "@material-ui/core";
 import {
   AccountCircle,
   LockOpen,
   Visibility,
   VisibilityOff,
+  Menu,
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -69,7 +73,18 @@ const Profile = ({ history }) => {
   }
 
   return (
-    <Container maxWidth="xs">
+    <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton className={classes.menuButton}>
+            <Menu></Menu>
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            100일간의 물마시기 습관, WaterHabit
+          </Typography>
+          <Button color="inherit"> Sign Out </Button>
+        </Toolbar>
+      </AppBar>
       <CssBaseline />
       <div className={classes.paper}>
         <Typography
@@ -155,7 +170,7 @@ const Profile = ({ history }) => {
           </Button>
         </form>
       </div>
-    </Container>
+    </div>
   );
 };
 
