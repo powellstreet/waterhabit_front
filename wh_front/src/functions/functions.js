@@ -44,7 +44,7 @@ const toDate = (val) => {
   let date = Number(val.substring(8,10));
 
   return new Date(year, month, date);
-}
+};
 
 module.exports = {
   chkEmail,

@@ -5,16 +5,6 @@ import {
   Button,
   Typography,
   CssBaseline,
-  AppBar,
-  Toolbar,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  SwipeableDrawer,
-  Menu,
-  MenuItem,
   FormGroup,
   FormControlLabel,
   Switch,
@@ -23,12 +13,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Mail,
   MoveToInbox,
-  AccountCircle,
-  LocalDrink,
 } from "@material-ui/icons";
 import axios from "axios";
 import dotenv from "dotenv";
-import Stamp from './Stamp';
+import Stamp from "./Stamp";
+import MainBar from "./MainBar";
 
 dotenv.config();
 
@@ -62,10 +51,10 @@ const useStyles = makeStyles((theme) => ({
 const UserRecords = ({ history }) => {
   const [records, setRecords] = useState([]);
   const [yesDays, setYesDays] = useState(0);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [stampType, setStampType] = useState("stamp");
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const classes = useStyles();
-
 
   const { userId, nickname, stamp, goal } = useSelector((state) => ({
     userId: state.userId,
@@ -78,101 +67,68 @@ const UserRecords = ({ history }) => {
     setAnchorEl(e.currentTarget);
   };
 
+  const handleStampType = (e) => {
+    setStampType(e.target.checked);
+  };
+
   useEffect(() => {
-    axios.post(`http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`, { userId })
+    axios
+      .post(`http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`, {
+        userId,
+      })
       .then((res) => {
         // let rc = []; rc.length = 100; rc.fill(0);
         // res.data.forEach((el) => { rc[Number(el.day) - 1] = 1 })
         // setRecords(rc);
         // setYesDays(res.data.length);
         // console.log(rc)
-        let rc = []; rc.length = 100; rc.fill(0);
-        res.data.forEach((el) => { rc[Number(el.day) - 1] = el.intake })
+        let rc = [];
+        rc.length = 100;
+        rc.fill(0);
+        res.data.forEach((el) => {
+          rc[Number(el.day) - 1] = el.intake;
+        });
         setRecords(rc);
         setYesDays(res.data.length);
-        console.log(rc)
+        console.log(rc);
       });
-  }, [])
+  }, []);
 
   return (
     <div>
       <CssBaseline />
-      <AppBar position="fixed">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-          {nickname}님 화이팅
-          </Typography>
-          {/* <Button color="inherit"> Sign Out </Button> */}
-          <div>
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={() => history.push("/userRecords")}
-              color="inherit"
-            >
-              <LocalDrink />
-            </IconButton>
-            <IconButton
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={open}
-              onClose={() => setAnchorEl(null)}
-            >
-              <MenuItem
-                onClick={() => {
-                  setAnchorEl(null);
-                  history.push("/profile");
-                }}
-              >
-                프로필
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  setAnchorEl(null);
-                }}
-              >
-                로그아웃
-              </MenuItem>
-            </Menu>
-          </div>
-        </Toolbar>
-      </AppBar>
+      <MainBar history={history}/>
+
       <div>
         <div>{nickname}님 화이팅입니다</div>
         <div>stamps : {stamp}</div>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                // checked={auth}
+                onChange={handleStampType}
+                // aria-label="login switch"
+              />
+            }
+            label={stampType ? "stamp" : "chart"}
+          />
+        </FormGroup>
         <button
           name="goUserConsole"
-          onClick={() => history.push('/userConsole')}
+          onClick={() => history.push("/userConsole")}
         >
           Go UserConsole!
         </button>
       </div>
       <div>성공률 : {yesDays} % </div>
-      {
-        records.map((el, idx) => {
-          return el >= goal ? <div key={idx}>{el}</div> : <div key={idx}>{el}</div>;
-        })
-      }
-
+      {records.map((el, idx) => {
+        return el >= goal ? (
+          <div key={idx}>{el}</div>
+        ) : (
+          <div key={idx}>{el}</div>
+        );
+      })}
     </div>
   );
 };

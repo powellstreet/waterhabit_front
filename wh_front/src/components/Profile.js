@@ -11,21 +11,30 @@ import {
   AppBar,
   Toolbar,
   IconButton,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
 import {
   AccountCircle,
-  LockOpen,
   Visibility,
   VisibilityOff,
-  Menu,
+  LocalDrink,
 } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
 import axios from "axios";
 import dotenv from "dotenv";
+import MainBar from "./MainBar";
 dotenv.config();
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  title: {
+    flexGrow: 1,
+  },
   form: {
     width: "100%",
     marginTop: theme.spacing(1),
@@ -52,6 +61,12 @@ const Profile = ({ history }) => {
   const [nicknameValue, setNicknameValue] = useState("");
   const [weightValue, setWeightValue] = useState("");
   const [goalValue, setGoalValue] = useState("");
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleMenu = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
 
   function profileUpdate() {
     axios
@@ -74,18 +89,8 @@ const Profile = ({ history }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton}>
-            <Menu></Menu>
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            100일간의 물마시기 습관, WaterHabit
-          </Typography>
-          <Button color="inherit"> Sign Out </Button>
-        </Toolbar>
-      </AppBar>
       <CssBaseline />
+      <MainBar history={history} />
       <div className={classes.paper}>
         <Typography
           component="h1"
@@ -149,25 +154,26 @@ const Profile = ({ history }) => {
               * 체중에 따른 WHO 추천 일일섭취량 : {weight * 30} ml
             </FormHelperText>
           </div>
-
-          <Button
-            name="submit"
-            variant="outlined"
-            color="primary"
-            onClick={profileUpdate}
-          >
-            Update
-          </Button>
-          <Button
-            name="submit"
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              history.push("/userConsole");
-            }}
-          >
-            Go BACK
-          </Button>
+          <div>
+            <Button
+              name="submit"
+              variant="outlined"
+              color="primary"
+              onClick={profileUpdate}
+            >
+              Update
+            </Button>
+            <Button
+              name="submit"
+              variant="outlined"
+              color="primary"
+              onClick={() => {
+                history.push("/userConsole");
+              }}
+            >
+              Go BACK
+            </Button>
+          </div>
         </form>
       </div>
     </div>

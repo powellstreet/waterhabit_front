@@ -6,6 +6,7 @@ import UserConsole from "./components/UserConsole";
 import UserRecords from "./components/UserRecords";
 import WholeRecords from "./components/WholeRecords";
 import Profile from "./components/Profile";
+import MainBar from "./components/MainBar";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/profile" component={Profile} />
           <Route path="/userRecords" component={UserRecords} />
           <Route path="/wholeRecords" component={WholeRecords} />
+          <Route path="/mainBar" component={MainBar} />
         </Switch>
       </div>
     </BrowserRouter>
