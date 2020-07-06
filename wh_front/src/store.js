@@ -49,10 +49,5 @@ export default createStore((state, action) => {
             day: action.day
         })
     }
-    if(action.type === 'toggleDrawer'){
-        return Object.assign({}, state, {
-            toggleDrawer: action.toggleDrawer
-        })
-    }
     return state;
 }, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());

@@ -1,32 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import {
   Button,
   Typography,
-  CssBaseline,
   AppBar,
   Toolbar,
   IconButton,
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  SwipeableDrawer,
   Menu,
   MenuItem,
-  FormGroup,
-  FormControlLabel,
-  Switch,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Mail,
-  MoveToInbox,
-  AccountCircle,
-  LocalDrink,
-} from "@material-ui/icons";
-
-import clsx from "clsx";
+import { AccountCircle, LocalDrink } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -49,7 +32,6 @@ const MainBar = ({ history }) => {
           <Typography variant="h6" className={classes.title}>
             100일간의 물마시기 습관, WaterHabit
           </Typography>
-          {/* <Button color="inherit"> Sign Out </Button> */}
           <div>
             <IconButton
               aria-label="account of current user"

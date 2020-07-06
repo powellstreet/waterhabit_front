@@ -10,14 +10,11 @@ import {
   Switch,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  Mail,
-  MoveToInbox,
-} from "@material-ui/icons";
 import axios from "axios";
 import dotenv from "dotenv";
 import Stamp from "./Stamp";
 import MainBar from "./MainBar";
+import LeftDrawer from "./LeftDrawer";
 
 dotenv.config();
 
@@ -49,12 +46,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const UserRecords = ({ history }) => {
-  const [records, setRecords] = useState([]);
-  const [yesDays, setYesDays] = useState(0);
+  // const [records, setRecords] = useState([]);
+  // const [yesDays, setYesDays] = useState(0);
+  const records = [2000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 30, 5000];
+  const yesDays = 10;
+
   const [stampType, setStampType] = useState("stamp");
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
   const classes = useStyles();
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer = (bln) => (e) => {
+    if (e && e.type === "keydown" && (e.key === "Tab" || e.key === "Shift")) {
+      return;
+    }
+    setDrawerOpen(bln);
+  };
 
   const { userId, nickname, stamp, goal } = useSelector((state) => ({
     userId: state.userId,
@@ -63,72 +70,77 @@ const UserRecords = ({ history }) => {
     goal: state.goal,
   }));
 
-  const handleMenu = (e) => {
-    setAnchorEl(e.currentTarget);
-  };
-
   const handleStampType = (e) => {
     setStampType(e.target.checked);
   };
 
-  useEffect(() => {
-    axios
-      .post(`http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`, {
-        userId,
-      })
-      .then((res) => {
-        // let rc = []; rc.length = 100; rc.fill(0);
-        // res.data.forEach((el) => { rc[Number(el.day) - 1] = 1 })
-        // setRecords(rc);
-        // setYesDays(res.data.length);
-        // console.log(rc)
-        let rc = [];
-        rc.length = 100;
-        rc.fill(0);
-        res.data.forEach((el) => {
-          rc[Number(el.day) - 1] = el.intake;
-        });
-        setRecords(rc);
-        setYesDays(res.data.length);
-        console.log(rc);
-      });
-  }, []);
+  // 작업하는 동안만 주석화!
+  // useEffect(() => {
+  //   axios
+  //     .post(`http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`, {
+  //       userId,
+  //     })
+  //     .then((res) => {
+  //       let rc = [];
+  //       rc.length = 100;
+  //       rc.fill(0);
+  //       res.data.forEach((el) => {
+  //         rc[Number(el.day) - 1] = el.intake;
+  //       });
+  //       setRecords(rc);
+  //       setYesDays(res.data.length);
+  //       console.log(rc);
+  //     });
+  // }, []);
 
   return (
-    <div>
+    <div className={classes.root}>
       <CssBaseline />
-      <MainBar history={history}/>
+      <MainBar history={history} />
+      <LeftDrawer toggleDrawer={toggleDrawer} drawerOpen={drawerOpen} history={history} />
 
-      <div>
-        <div>{nickname}님 화이팅입니다</div>
-        <div>stamps : {stamp}</div>
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch
-                // checked={auth}
-                onChange={handleStampType}
-                // aria-label="login switch"
-              />
-            }
-            label={stampType ? "stamp" : "chart"}
-          />
-        </FormGroup>
-        <button
-          name="goUserConsole"
-          onClick={() => history.push("/userConsole")}
-        >
-          Go UserConsole!
-        </button>
+      <div className={classes.paper}>
+        <div>
+          <div>{nickname}님 화이팅입니다</div>
+          <div>stamps : {stamp}</div>
+          <FormGroup>
+            <FormControlLabel
+              control={
+                <Switch
+                  // checked={auth}
+                  onChange={handleStampType}
+                  // aria-label="login switch"
+                />
+              }
+              label={stampType ? "stamp" : "chart"}
+            />
+          </FormGroup>
+          <Button
+            name="goUserConsole"
+            color="primary"
+            variant="outlined"
+            onClick={() => history.push("/userConsole")}
+          >
+            Go UserConsole!
+          </Button>
+          <Button
+            name="drawerButton"
+            color="primary"
+            variant="outlined"
+            onClick={toggleDrawer(true)}
+          >
+            Menu
+          </Button>
+        </div>
+        <div>성공률 : {yesDays} % </div>
+        {records.map((el, idx) => {
+          return el >= goal ? (
+            <Stamp key={idx} day={idx + 1} intake={el} />
+          ) : (
+            <Stamp key={idx} intake={el} />
+          );
+        })}
       </div>
-      <div>성공률 : {yesDays} % </div>
-      {records.map((el, idx) => {
-        return el >= goal ? (
-          <div key={idx}>{el}</div>
-        ) : (
-          <div key={idx}>{el}</div>
-        );
-      })}
     </div>
   );
 };

@@ -4,27 +4,19 @@ import {
   Button,
   Typography,
   TextField,
-  Container,
   CssBaseline,
   InputAdornment,
   FormHelperText,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Menu,
-  MenuItem,
 } from "@material-ui/core";
-import {
-  AccountCircle,
-  Visibility,
-  VisibilityOff,
-  LocalDrink,
-} from "@material-ui/icons";
+import {} from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
 import axios from "axios";
 import dotenv from "dotenv";
+
 import MainBar from "./MainBar";
+import LeftDrawer from "./LeftDrawer";
+
 dotenv.config();
 
 const useStyles = makeStyles((theme) => ({
@@ -61,11 +53,13 @@ const Profile = ({ history }) => {
   const [nicknameValue, setNicknameValue] = useState("");
   const [weightValue, setWeightValue] = useState("");
   const [goalValue, setGoalValue] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const handleMenu = (e) => {
-    setAnchorEl(e.currentTarget);
+  const toggleDrawer = (bln) => (e) => {
+    if (e && e.type === "keydown" && (e.key === "Tab" || e.key === "Shift")) {
+      return;
+    }
+    setDrawerOpen(bln);
   };
 
   function profileUpdate() {
@@ -91,6 +85,8 @@ const Profile = ({ history }) => {
     <div className={classes.root}>
       <CssBaseline />
       <MainBar history={history} />
+      <LeftDrawer toggleDrawer={toggleDrawer} drawerOpen={drawerOpen} history={history} />
+
       <div className={classes.paper}>
         <Typography
           component="h1"
@@ -172,6 +168,14 @@ const Profile = ({ history }) => {
               }}
             >
               Go BACK
+            </Button>
+            <Button
+              name="drawerButton"
+              color="primary"
+              variant="outlined"
+              onClick={toggleDrawer(true)}
+            >
+              Menu
             </Button>
           </div>
         </form>

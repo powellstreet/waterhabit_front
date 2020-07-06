@@ -1,15 +1,14 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import {
   SwipeableDrawer,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
+  Divider,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Mail, MoveToInbox } from "@material-ui/icons";
-import clsx from "clsx";
+import { AccountCircle, LocalDrink, Face } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -20,68 +19,51 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LeftDrawer = () => {
-  const dispatch = useDispatch();
+const LeftDrawer = ({ toggleDrawer, drawerOpen, history }) => {
   const classes = useStyles();
 
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const [state, setState] = useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
-
-  const open = Boolean(anchorEl);
-  const anchor = "left";
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
-  const list = (anchor) => (
+  const list = () => (
     <div
-      className={clsx(classes.list, {
-        [classes.fullList]: anchor === "top" || anchor === "bottom",
-      })}
+      className={classes.list}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <MoveToInbox /> : <Mail />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button onClick={() => history.push("/profile")}>
+          <ListItemIcon>
+            <AccountCircle />
+          </ListItemIcon>
+          <ListItemText primary="프로필" />
+        </ListItem>
+        <Divider />
+
+        <ListItem button onClick={() => history.push("/userConsole")}>
+          <ListItemIcon>
+            <Face />
+          </ListItemIcon>
+          <ListItemText primary="메인 메뉴" />
+        </ListItem>
       </List>
+
+      <ListItem button onClick={() => history.push("/userRecords")}>
+        <ListItemIcon>
+          <LocalDrink />
+        </ListItemIcon>
+        <ListItemText primary="나의 기록" />
+      </ListItem>
     </div>
   );
-
-//   dispatch({ type: "toggleDrawer", toggleDrawer });
-
 
   return (
     <div>
       <SwipeableDrawer
-        anchor={anchor}
-        open={state[anchor]}
-        onClose={toggleDrawer(anchor, false)}
-        onOpen={toggleDrawer(anchor, true)}
+        anchor="left"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
       >
-        {list(anchor)}
+        {list()}
       </SwipeableDrawer>
     </div>
   );

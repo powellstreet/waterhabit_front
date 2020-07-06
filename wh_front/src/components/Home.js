@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   Button,
   Typography,
@@ -8,12 +8,7 @@ import {
   CssBaseline,
   InputAdornment,
 } from "@material-ui/core";
-import {
-  Email,
-  LockOpen,
-  Visibility,
-  VisibilityOff,
-} from "@material-ui/icons";
+import { Email, LockOpen, Visibility, VisibilityOff } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 import "fontsource-roboto";
 
@@ -74,7 +69,7 @@ const Home = ({ history }) => {
   }
 
   return (
-    <Container maxWidth="xs" >
+    <Container maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography
