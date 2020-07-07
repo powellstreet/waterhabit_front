@@ -9,6 +9,7 @@ import UserRecords from "./components/UserRecords";
 import WholeRecords from "./components/WholeRecords";
 import Profile from "./components/Profile";
 import MainBar from "./components/MainBar";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/wholeRecords" component={WholeRecords} />
           <Route path="/mainBar" component={MainBar} />
         </Switch>
+        <Footer />
       </div>
     </BrowserRouter>
   );
