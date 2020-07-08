@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Typography, CssBaseline } from "@material-ui/core";
+import {
+  Button,
+  Typography,
+  TextField,
+  CssBaseline,
+  Grid,
+  Fab,
+  ListItemSecondaryAction,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import {} from "@material-ui/icons";
+import { Mail } from "@material-ui/icons";
 
 import axios from "axios";
 import dotenv from "dotenv";
@@ -19,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   root: {
-    display: "flex",
+    // display: "flex",
   },
   menuButton: {
     marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1,
+    // flexGrow: 1,
   },
   menuButton: {
     marginRight: 36,
@@ -35,6 +43,16 @@ const useStyles = makeStyles((theme) => ({
   },
   fullList: {
     width: "auto",
+  },
+  mainGrid: {
+    marginTop: theme.spacing(3),
+    // backgroundColor: 'grey'
+  },
+  fab: {
+    position: "fixed",
+    bottom: "30%",
+    right: "10%",
+    zIndex: 1000,
   },
 }));
 
@@ -107,85 +125,117 @@ const UserConsole = ({ history }) => {
     <div className={classes.root}>
       <CssBaseline />
       <MainBar history={history} />
-      <LeftDrawer toggleDrawer={toggleDrawer} drawerOpen={drawerOpen} history={history} />
+      <LeftDrawer
+        toggleDrawer={toggleDrawer}
+        drawerOpen={drawerOpen}
+        history={history}
+      />
 
       <div className={classes.paper}>
-        <Typography
-          component="h1"
-          variant="h3"
-          color="textPrimary"
-          align="center"
-        >
-          {nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다!
-        </Typography>
+        <Grid container spacing={3} className={classes.mainGrid}>
+          <Grid item xs={12} style={{ backgroundColor: "red" }}>
+            {nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다!
+          </Grid>
 
-        <div
-          style={{
-            flex: 2,
-            backgroundColor: "green",
-            width: "80%",
-            flexDirection: "column",
-          }}
-        >
-          <div>
-            물 추가하기
-            <input
-              name="addWater"
-              type="text"
-              placeholder="물한잔"
-              onChange={(e) => setAddIntake(e.target.value)}
-            ></input>
-            <Button
-              name="addWaterBtn"
-              color="primary"
-              variant="outlined"
-              onClick={updateTotalIntake}
-            >
-              추가
-            </Button>
-          </div>
-          <div>오늘의 목표 : {goal} ml</div>
-          <div>현재까지 마신 물 : {intake} ml</div>
-          <div>오늘의 목표 달성률 : {ratio} %</div>
-        </div>
+          <Grid item xs={6} style={{ backgroundColor: "ivory" }}>
+            <div>
+              <div>
+                물 추가하기
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  fullWidth
+                  id="addWater"
+                  name="addWater"
+                  type="number"
+                  label="물 추가하기"
+                  onChange={(e) => setAddIntake(e.target.value)}
+                ></TextField>
+                <Button
+                  name="addWaterBtn"
+                  color="primary"
+                  variant="outlined"
+                  onClick={updateTotalIntake}
+                >
+                  추가
+                </Button>
+              </div>
+            </div>
 
-        <div
-          style={{
-            flex: 1,
-            backgroundColor: "yellow",
-            width: "20%",
-            flexDirection: "column",
-          }}
-        >
-          <div>
-            <Button
-              name="drawerButton"
-              color="primary"
-              variant="outlined"
-              onClick={toggleDrawer(true)}
-            >
-              Menu
-            </Button>
-          </div>
-          <div
-            style={{
-              backgroundColor: "skyblue",
-              width: `${ratio}%`,
-              height: 100,
-            }}
-          ></div>
-        </div>
+            <div
+              style={{
+                flex: 1,
+                backgroundColor: "yellow",
+                width: "20%",
+                flexDirection: "column",
+              }}
+            ></div>
+          </Grid>
 
-        <Typography paragraph>
-          This being human is a guest house. Every morning a new arrival. A joy,
-          a depression, a meanness, some momentary awareness comes as an
-          unexpected visitor. Welcome and entertain them all! Even if they’re a
-          crowd of sorrows, who violently sweep your house empty of its
-          furniture, still, treat each guest honorably. He may be clearing you
-          out for some new delight. The dark thought, the shame, the malice,
-          meet them at the door laughing, and invite them in. Be grateful for
-          whoever comes, because each has been sent as a guide from beyond.
-        </Typography>
+          <Grid item xs={6} style={{ backgroundColor: "gold" }}>
+            <div>오늘의 목표 : {goal} ml</div>
+            <div>현재까지 마신 물 : {intake} ml</div>
+            <div>오늘의 목표 달성률 : {ratio} %</div>
+            <div>
+              <div
+                style={{
+                  backgroundColor: "blue",
+                  width: `${ratio}%`,
+                  height: 100,
+                }}
+              ></div>
+            </div>
+          </Grid>
+
+          <Grid container spacing={1}>
+            <Grid item xs={3}>
+              <div>
+                <Button
+                  name="drawerButton"
+                  color="primary"
+                  variant="outlined"
+                  onClick={toggleDrawer(true)}
+                >
+                  Menu
+                </Button>
+              </div>
+            </Grid>
+            <Grid item xs={3}>
+              <div>
+                <Button
+                  name="drawerButton"
+                  color="primary"
+                  variant="outlined"
+                  onClick={toggleDrawer(true)}
+                >
+                  Menu
+                </Button>
+              </div>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography paragraph>
+              This being human is a guest house. Every morning a new arrival. A
+              joy, a depression, a meanness, some momentary awareness comes as
+              an unexpected visitor. Welcome and entertain them all! Even if
+              they’re a crowd of sorrows, who violently sweep your house empty
+              of its furniture, still, treat each guest honorably. He may be
+              clearing you out for some new delight. The dark thought, the
+              shame, the malice, meet them at the door laughing, and invite them
+              in. Be grateful for whoever comes, because each has been sent as a
+              guide from beyond.
+            </Typography>
+          </Grid>
+        </Grid>
+      </div>
+      <div>
+        <Fab
+          color="secondary"
+          className={classes.fab}
+          onClick={toggleDrawer(true)}
+        >
+          <Mail />
+        </Fab>
       </div>
     </div>
   );

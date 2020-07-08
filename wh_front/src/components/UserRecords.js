@@ -8,8 +8,11 @@ import {
   FormGroup,
   FormControlLabel,
   Switch,
+  Fab,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { Mail } from "@material-ui/icons";
+
 import axios from "axios";
 import dotenv from "dotenv";
 import Stamp from "./Stamp";
@@ -42,6 +45,12 @@ const useStyles = makeStyles((theme) => ({
   },
   fullList: {
     width: "auto",
+  },
+  fab: {
+    position: "fixed",
+    bottom: "30%",
+    right: "10%",
+    zIndex: 1000,
   },
 }));
 
@@ -140,6 +149,15 @@ const UserRecords = ({ history }) => {
             <Stamp key={idx} intake={el} />
           );
         })}
+      </div>
+      <div>
+        <Fab
+          color="secondary"
+          className={classes.fab}
+          onClick={toggleDrawer(true)}
+        >
+          <Mail />
+        </Fab>
       </div>
     </div>
   );

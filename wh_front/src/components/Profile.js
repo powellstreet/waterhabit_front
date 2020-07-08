@@ -7,8 +7,9 @@ import {
   CssBaseline,
   InputAdornment,
   FormHelperText,
+  Fab,
 } from "@material-ui/core";
-import {} from "@material-ui/icons";
+import { Mail } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
 
 import axios from "axios";
@@ -36,6 +37,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  fab: {
+    position: "fixed",
+    bottom: "30%",
+    right: "10%",
+    zIndex: 1000,
   },
 }));
 
@@ -179,6 +186,15 @@ const Profile = ({ history }) => {
             </Button>
           </div>
         </form>
+      </div>
+      <div>
+        <Fab
+          color="secondary"
+          className={classes.fab}
+          onClick={toggleDrawer(true)}
+        >
+          <Mail />
+        </Fab>
       </div>
     </div>
   );
