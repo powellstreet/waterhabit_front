@@ -17,6 +17,7 @@ import dotenv from "dotenv";
 
 import MainBar from "./MainBar";
 import LeftDrawer from "./LeftDrawer";
+import FloatButton from "./FloatButton";
 dotenv.config();
 
 const useStyles = makeStyles((theme) => ({
@@ -228,15 +229,8 @@ const UserConsole = ({ history }) => {
           </Grid>
         </Grid>
       </div>
-      <div>
-        <Fab
-          color="secondary"
-          className={classes.fab}
-          onClick={toggleDrawer(true)}
-        >
-          <Mail />
-        </Fab>
-      </div>
+      <FloatButton toggleDrawer={toggleDrawer} />
+
     </div>
   );
 };

@@ -7,7 +7,6 @@ import {
   CssBaseline,
   InputAdornment,
   FormHelperText,
-  Fab,
 } from "@material-ui/core";
 import { Mail } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/core/styles";
@@ -17,6 +16,7 @@ import dotenv from "dotenv";
 
 import MainBar from "./MainBar";
 import LeftDrawer from "./LeftDrawer";
+import FloatButton from "./FloatButton";
 
 dotenv.config();
 
@@ -92,7 +92,11 @@ const Profile = ({ history }) => {
     <div className={classes.root}>
       <CssBaseline />
       <MainBar history={history} />
-      <LeftDrawer toggleDrawer={toggleDrawer} drawerOpen={drawerOpen} history={history} />
+      <LeftDrawer
+        toggleDrawer={toggleDrawer}
+        drawerOpen={drawerOpen}
+        history={history}
+      />
 
       <div className={classes.paper}>
         <Typography
@@ -187,15 +191,7 @@ const Profile = ({ history }) => {
           </div>
         </form>
       </div>
-      <div>
-        <Fab
-          color="secondary"
-          className={classes.fab}
-          onClick={toggleDrawer(true)}
-        >
-          <Mail />
-        </Fab>
-      </div>
+      <FloatButton toggleDrawer={toggleDrawer} />
     </div>
   );
 };
