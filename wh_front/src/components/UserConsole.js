@@ -6,9 +6,18 @@ import {
   TextField,
   CssBaseline,
   Grid,
-  Fab,
   ListItemSecondaryAction,
+  CircularProgress,
+  LinearProgress,
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  CardActionArea,
+  CardMedia,
 } from "@material-ui/core";
+import { Autocomplete } from "@material-ui/lab";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { Mail } from "@material-ui/icons";
 
@@ -18,6 +27,7 @@ import dotenv from "dotenv";
 import MainBar from "./MainBar";
 import LeftDrawer from "./LeftDrawer";
 import FloatButton from "./FloatButton";
+import StatusCard from "./StatusCard";
 dotenv.config();
 
 const useStyles = makeStyles((theme) => ({
@@ -29,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     // display: "flex",
+    background: "pink",
+    // background: "linear-gradient(45deg, blue 5%, skyblue 90%)",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -55,6 +67,9 @@ const useStyles = makeStyles((theme) => ({
     right: "10%",
     zIndex: 1000,
   },
+  media: {
+    height: 50,
+  },
 }));
 
 const UserConsole = ({ history }) => {
@@ -71,6 +86,14 @@ const UserConsole = ({ history }) => {
 
   const [addIntake, setAddIntake] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const cups = [
+    { ml: "200ml" },
+    { ml: "250ml (잔)" },
+    { ml: "300ml (컵)" },
+    { ml: "400ml" },
+    { ml: "500ml" },
+  ];
 
   const toggleDrawer = (bln) => (e) => {
     if (e && e.type === "keydown" && (e.key === "Tab" || e.key === "Shift")) {
@@ -137,55 +160,94 @@ const UserConsole = ({ history }) => {
           <Grid item xs={12} style={{ backgroundColor: "red" }}>
             {nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다!
           </Grid>
-
-          <Grid item xs={6} style={{ backgroundColor: "ivory" }}>
+          <Grid item xs={12} style={{ backgroundColor: "white" }}>
             <div>
-              <div>
-                물 추가하기
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  fullWidth
-                  id="addWater"
-                  name="addWater"
-                  type="number"
-                  label="물 추가하기"
-                  onChange={(e) => setAddIntake(e.target.value)}
-                ></TextField>
-                <Button
-                  name="addWaterBtn"
-                  color="primary"
-                  variant="outlined"
-                  onClick={updateTotalIntake}
-                >
-                  추가
-                </Button>
-              </div>
+              <Box display="flex" alignItems="center">
+                <Box width="100%" mr={1}>
+                  {/* <LinearProgress variant="determinate" /> */}
+                </Box>
+                <Box minWidth={35}>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                  >{`${ratio}%`}</Typography>
+                </Box>
+              </Box>
             </div>
-
-            <div
-              style={{
-                flex: 1,
-                backgroundColor: "yellow",
-                width: "20%",
-                flexDirection: "column",
-              }}
-            ></div>
           </Grid>
 
           <Grid item xs={6} style={{ backgroundColor: "gold" }}>
-            <div>오늘의 목표 : {goal} ml</div>
-            <div>현재까지 마신 물 : {intake} ml</div>
-            <div>오늘의 목표 달성률 : {ratio} %</div>
-            <div>
-              <div
-                style={{
-                  backgroundColor: "blue",
-                  width: `${ratio}%`,
-                  height: 100,
-                }}
-              ></div>
-            </div>
+            <Card>
+              {/* <CardActionArea> */}
+              <CardMedia
+                image="../images/sample.png"
+                title="Contemplative Reptile"
+                className={classes.media}
+              ></CardMedia>
+
+              <CardContent>
+                <Typography>오늘의 목표 : {goal} ml</Typography>
+                <Typography>현재까지 마신 물 : {intake} ml</Typography>
+                <Typography> 물 추가하기</Typography>
+                <div>
+                  <Autocomplete
+                    options={cups}
+                    getOptionLabel={(option) => option.ml}
+                    // style={{ width: 300 }}
+                    renderInput={(params) => (
+                      <TextField {...params} label="ml" variant="outlined" />
+                    )}
+                    onInputChange={(event, value) => {
+                      value = Number(value.substring(0, 3));
+                      setAddIntake(value);
+                    }}
+                  />
+                  <Button
+                    name="addWaterBtn"
+                    color="primary"
+                    variant="outlined"
+                    onClick={updateTotalIntake}
+                  >
+                    추가
+                  </Button>
+                </div>
+              </CardContent>
+              {/* </CardActionArea> */}
+            </Card>
+          </Grid>
+
+          {/* AutoComplete 사용해서 추가하는 물 양 선택할 수 있도록 수정하기 */}
+
+          <Grid item xs={6} style={{ backgroundColor: "orange" }}>
+            <Card>
+              <CardMedia
+                image="../images/sample.png"
+                title="Contemplative Reptile"
+                className={classes.media}
+              ></CardMedia>
+              <CardContent>
+                <Typography>오늘의 목표 달성률 : {ratio} %</Typography>
+                <StatusCard status={ratio} />
+              </CardContent>
+            </Card>
+          </Grid>
+
+          {/* <Grid item xs={6} ></Grid> */}
+          <Grid item xs={12} style={{ backgroundColor: "white" }}>
+            <Card>
+              <CardContent>
+                <div>
+                  <div
+                    style={{
+                      background:
+                        "linear-gradient(45deg, blue 5%, skyblue 90%)",
+                      width: `${ratio}%`,
+                      height: 100,
+                    }}
+                  ></div>
+                </div>
+              </CardContent>
+            </Card>
           </Grid>
 
           <Grid container spacing={1}>
@@ -230,7 +292,6 @@ const UserConsole = ({ history }) => {
         </Grid>
       </div>
       <FloatButton toggleDrawer={toggleDrawer} />
-
     </div>
   );
 };
