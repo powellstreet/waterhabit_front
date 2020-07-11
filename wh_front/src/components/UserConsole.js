@@ -15,6 +15,7 @@ import {
   CardContent,
   CardActionArea,
   CardMedia,
+  Modal,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 
@@ -158,7 +159,9 @@ const UserConsole = ({ history }) => {
       <div className={classes.paper}>
         <Grid container spacing={3} className={classes.mainGrid}>
           <Grid item xs={12} style={{ backgroundColor: "red" }}>
-            {nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다!
+            <Typography variant="h5">
+              {nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다!
+            </Typography>
           </Grid>
           <Grid item xs={12} style={{ backgroundColor: "white" }}>
             <div>
@@ -219,7 +222,8 @@ const UserConsole = ({ history }) => {
           {/* AutoComplete 사용해서 추가하는 물 양 선택할 수 있도록 수정하기 */}
 
           <Grid item xs={6} style={{ backgroundColor: "orange" }}>
-            <Card>
+            <StatusCard status={ratio} />
+            {/* <Card>
               <CardMedia
                 image="../images/sample.png"
                 title="Contemplative Reptile"
@@ -229,7 +233,7 @@ const UserConsole = ({ history }) => {
                 <Typography>오늘의 목표 달성률 : {ratio} %</Typography>
                 <StatusCard status={ratio} />
               </CardContent>
-            </Card>
+            </Card> */}
           </Grid>
 
           {/* <Grid item xs={6} ></Grid> */}
