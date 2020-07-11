@@ -6,7 +6,13 @@ import { AccountCircle, LocalDrink } from "@material-ui/icons";
 
 const Stamp = ({ day, intake }) => {
 
-  if (intake > 2000) {
+  // const { goal } = useSelector((state) => ({
+  //   goal: state.goal
+  // }))
+  // 임시 목표치
+  const goal = 2000
+
+  if (intake > goal) {
     return (
       <div>
         {day} 목표 달성!

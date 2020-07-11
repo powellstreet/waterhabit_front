@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 50,
   },
+  mainGrid: {
+    marginTop: theme.spacing(3),
+    // backgroundColor: 'grey'
+  },
 }));
 
 const StatusCard = ({ status }) => {
@@ -47,7 +51,6 @@ const StatusCard = ({ status }) => {
         className={classes.media}
       ></CardMedia>
       <CardContent>
-        Your hair was long when we first met
         <Typography>오늘의 목표 달성률 : {status} %</Typography>
         <Typography>{statusObj.comment}</Typography>
       </CardContent>

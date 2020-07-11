@@ -8,6 +8,7 @@ import {
   FormGroup,
   FormControlLabel,
   Switch,
+  Grid,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   root: {
-    display: "flex",
+    // display: "flex",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -53,13 +54,23 @@ const useStyles = makeStyles((theme) => ({
   extendedIcon: {
     marginRight: theme.spacing(1),
   },
+  mainGrid: {
+    marginTop: theme.spacing(3),
+    // backgroundColor: 'grey'
+  },
+  stampGrid : {
+    marginTop: theme.spacing(3),
+    paddingLeft: '15%',
+    paddingRight: '15%'
+  }
 }));
 
 const UserRecords = ({ history }) => {
   // const [records, setRecords] = useState([]);
   // const [yesDays, setYesDays] = useState(0);
-  const records = [2000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 30, 5000];
+  const records = [2000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 30, 5000, 3000, 3000, 30, 5000, 3000, 3000, 30, 5000, 3000, 3000, 30, 5000];
   const yesDays = 10;
+  const goal = 2000
 
   const [stampType, setStampType] = useState("stamp");
   const classes = useStyles();
@@ -73,11 +84,12 @@ const UserRecords = ({ history }) => {
     setDrawerOpen(bln);
   };
 
-  const { userId, nickname, stamp, goal } = useSelector((state) => ({
+  const { userId, nickname, stamp, day } = useSelector((state) => ({
     userId: state.userId,
     nickname: state.nickname,
     stamp: state.stamp,
-    goal: state.goal,
+    // goal: state.goal,
+    day: state.day,
   }));
 
   const handleStampType = (e) => {
@@ -92,14 +104,13 @@ const UserRecords = ({ history }) => {
   //     })
   //     .then((res) => {
   //       let rc = [];
-  //       rc.length = 100;
-  //       rc.fill(0);
-  //       res.data.forEach((el) => {
-  //         rc[Number(el.day) - 1] = el.intake;
-  //       });
+  //       for (let i = 0; i < day; i++) {
+  //         res.data[i] ? (rc[i] = res.data[i].intake) : (rc[i] = 0);
+  //       }
   //       setRecords(rc);
-  //       setYesDays(res.data.length);
+  //       setYesDays(res.data.filter(el => el.intake >= goal).length);
   //       console.log(rc);
+  //       console.log('this is resdata : ', res.data);
   //     });
   // }, []);
 
@@ -107,52 +118,57 @@ const UserRecords = ({ history }) => {
     <div className={classes.root}>
       <CssBaseline />
       <MainBar history={history} />
-      <LeftDrawer toggleDrawer={toggleDrawer} drawerOpen={drawerOpen} history={history} />
+      <LeftDrawer
+        toggleDrawer={toggleDrawer}
+        drawerOpen={drawerOpen}
+        history={history}
+      />
 
       <div className={classes.paper}>
-        <div>
-          <div>{nickname}님 화이팅입니다</div>
-          <div>stamps : {stamp}</div>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Switch
-                  // checked={auth}
-                  onChange={handleStampType}
-                  // aria-label="login switch"
+        <Grid container spacing={3} className={classes.mainGrid}>
+          <Grid item xs={12} style={{ backgroundColor: "orange" }}>
+            <div>
+              <div>{nickname}님 화이팅입니다</div>
+              <div>날짜 : {day}, 성공일수 : {yesDays}</div>
+              <FormGroup>
+                <FormControlLabel
+                  control={<Switch onChange={handleStampType} />}
+                  label={stampType ? "stamp" : "chart"}
                 />
-              }
-              label={stampType ? "stamp" : "chart"}
-            />
-          </FormGroup>
-          <Button
-            name="goUserConsole"
-            color="primary"
-            variant="outlined"
-            onClick={() => history.push("/userConsole")}
-          >
-            Go UserConsole!
-          </Button>
-          <Button
-            name="drawerButton"
-            color="primary"
-            variant="outlined"
-            onClick={toggleDrawer(true)}
-          >
-            Menu
-          </Button>
-        </div>
-        <div>성공률 : {yesDays} % </div>
-        {records.map((el, idx) => {
-          return el >= goal ? (
-            <Stamp key={idx} day={idx + 1} intake={el} />
-          ) : (
-            <Stamp key={idx} intake={el} />
-          );
-        })}
+              </FormGroup>
+            </div>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          spacing={3}
+          justify="center"
+          className={classes.stampGrid}
+        >
+          {records.map((el, idx) => {
+            return el >= goal ? (
+              <Grid
+                item
+                xs={1}
+                spacing={5}
+                style={{ backgroundColor: "skyblue" }}
+              >
+                <Stamp key={idx} day={idx + 1} intake={el} />
+              </Grid>
+            ) : (
+              <Grid
+                item
+                xs={1}
+                spacing={5}
+                style={{ backgroundColor: "orange" }}
+              >
+                <Stamp key={idx} intake={el} />
+              </Grid>
+            );
+          })}
+        </Grid>
       </div>
       <FloatButton toggleDrawer={toggleDrawer} />
-
     </div>
   );
 };
