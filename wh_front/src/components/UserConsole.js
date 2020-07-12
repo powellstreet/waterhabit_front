@@ -17,10 +17,10 @@ import {
   CardMedia,
   Modal,
 } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
+import { Autocomplete, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@material-ui/lab";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Mail } from "@material-ui/icons";
+import { Mail, FileCopyOutlined, Save, Print, Share, Favorite } from "@material-ui/icons";
 
 import axios from "axios";
 import dotenv from "dotenv";
@@ -71,7 +71,31 @@ const useStyles = makeStyles((theme) => ({
   media: {
     height: 50,
   },
+  speedDial: {
+    position: "absolute",
+    "&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft": {
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
+    "&.MuiSpeedDial-directionDown, &.MuiSpeedDial-directionRight": {
+      top: theme.spacing(2),
+      left: theme.spacing(2),
+    },
+    exampleWrapper: {
+      position: 'relative',
+      marginTop: theme.spacing(3),
+      height: 380,
+    },
+  },
 }));
+
+const actions = [
+  { icon: <FileCopyOutlined />, name: "Copy" },
+  { icon: <Save />, name: "Save" },
+  { icon: <Print />, name: "Print" },
+  { icon: <Share />, name: "Share" },
+  { icon: <Favorite />, name: "Like" },
+];
 
 const UserConsole = ({ history }) => {
   const dispatch = useDispatch();
@@ -130,6 +154,19 @@ const UserConsole = ({ history }) => {
         { userId, day }
       )
       .then((res) => console.log(res.data));
+  };
+
+  // 
+
+  const [hidden, setHidden] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
   };
 
   useEffect(() => {
@@ -296,6 +333,27 @@ const UserConsole = ({ history }) => {
         </Grid>
       </div>
       <FloatButton toggleDrawer={toggleDrawer} />
+      <div className={classes.exampleWrapper}>
+        <SpeedDial
+          ariaLabel="SpeedDial example"
+          className={classes.speedDial}
+          hidden={hidden}
+          icon={<SpeedDialIcon />}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          open={open}
+          direction="up"
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={handleClose}
+            />
+          ))}
+        </SpeedDial>
+      </div>
     </div>
   );
 };
