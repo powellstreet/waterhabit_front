@@ -17,6 +17,7 @@ import dotenv from "dotenv";
 import MainBar from "./MainBar";
 import LeftDrawer from "./LeftDrawer";
 import FloatButton from "./FloatButton";
+import SpeedDialButton from "./SpeedDialButton";
 
 dotenv.config();
 
@@ -191,7 +192,8 @@ const Profile = ({ history }) => {
           </div>
         </form>
       </div>
-      <FloatButton toggleDrawer={toggleDrawer} />
+      {/* <FloatButton toggleDrawer={toggleDrawer} /> */}
+      {/* <SpeedDialButton /> */}
     </div>
   );
 };

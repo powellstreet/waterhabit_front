@@ -29,6 +29,7 @@ import MainBar from "./MainBar";
 import LeftDrawer from "./LeftDrawer";
 import FloatButton from "./FloatButton";
 import StatusCard from "./StatusCard";
+import SpeedDialButton from "./SpeedDialButton";
 dotenv.config();
 
 const useStyles = makeStyles((theme) => ({
@@ -332,28 +333,8 @@ const UserConsole = ({ history }) => {
           </Grid>
         </Grid>
       </div>
-      <FloatButton toggleDrawer={toggleDrawer} />
-      <div className={classes.exampleWrapper}>
-        <SpeedDial
-          ariaLabel="SpeedDial example"
-          className={classes.speedDial}
-          hidden={hidden}
-          icon={<SpeedDialIcon />}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          open={open}
-          direction="up"
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              onClick={handleClose}
-            />
-          ))}
-        </SpeedDial>
-      </div>
+      {/* <FloatButton toggleDrawer={toggleDrawer} /> */}
+      {/* <SpeedDialButton /> */}
     </div>
   );
 };

@@ -61,6 +61,7 @@ const Home = ({ history }) => {
             type: "day",
             day: dayCounter(toDate(instance.createdAt)),
           });
+          dispatch({ type: "isLogin", isLogin: true})
           history.push("/userConsole");
         } else {
           alert("로그인 정보가 맞지 않습니다");
