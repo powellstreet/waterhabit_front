@@ -5,7 +5,7 @@ import { SpeedDial, SpeedDialAction, SpeedDialIcon } from "@material-ui/lab";
 import { LocalDrink, AccountCircle, Face } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   speedDial: {
-    position: "absolute",
+    position: "fixed",
     "&.MuiSpeedDial-directionUp, &.MuiSpeedDial-directionLeft": {
       bottom: theme.spacing(20),
       right: theme.spacing(10),

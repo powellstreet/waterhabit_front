@@ -25,9 +25,11 @@ dotenv.config();
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
+    // display: "flex",
+    // flexDirection: "column",
     alignItems: "center",
+    backgroundColor: 'blue',
+    height: '100%'
   },
   root: {
     // display: "flex",

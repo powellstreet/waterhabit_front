@@ -157,19 +157,6 @@ const UserConsole = ({ history }) => {
       .then((res) => console.log(res.data));
   };
 
-  // 
-
-  const [hidden, setHidden] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
   useEffect(() => {
     axios
       .post(
@@ -292,32 +279,6 @@ const UserConsole = ({ history }) => {
             </Card>
           </Grid>
 
-          <Grid container spacing={1}>
-            <Grid item xs={3}>
-              <div>
-                <Button
-                  name="drawerButton"
-                  color="primary"
-                  variant="outlined"
-                  onClick={toggleDrawer(true)}
-                >
-                  Menu
-                </Button>
-              </div>
-            </Grid>
-            <Grid item xs={3}>
-              <div>
-                <Button
-                  name="drawerButton"
-                  color="primary"
-                  variant="outlined"
-                  onClick={toggleDrawer(true)}
-                >
-                  Menu
-                </Button>
-              </div>
-            </Grid>
-          </Grid>
           <Grid item xs={12}>
             <Typography paragraph>
               This being human is a guest house. Every morning a new arrival. A
