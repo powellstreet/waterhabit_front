@@ -51,8 +51,8 @@ const StatusCard = ({ status }) => {
         className={classes.media}
       ></CardMedia>
       <CardContent>
-        <Typography>오늘의 목표 달성률 : {status} %</Typography>
-        <Typography>{statusObj.comment}</Typography>
+        <Typography variant="h2" align="center">{status} %</Typography>
+        <Typography variant="h5" align="center">{statusObj.comment}</Typography>
       </CardContent>
     </Card>
   );

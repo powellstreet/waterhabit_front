@@ -17,10 +17,23 @@ import {
   CardMedia,
   Modal,
 } from "@material-ui/core";
-import { Autocomplete, SpeedDial, SpeedDialAction, SpeedDialIcon } from "@material-ui/lab";
+import {
+  Autocomplete,
+  SpeedDial,
+  SpeedDialAction,
+  SpeedDialIcon,
+} from "@material-ui/lab";
 
 import { makeStyles } from "@material-ui/core/styles";
-import { Mail, FileCopyOutlined, Save, Print, Share, Favorite } from "@material-ui/icons";
+import {
+  Mail,
+  FileCopyOutlined,
+  Save,
+  Print,
+  Share,
+  Favorite,
+} from "@material-ui/icons";
+import aquaImage from "../images/aquablue.jpg";
 
 import axios from "axios";
 import dotenv from "dotenv";
@@ -41,8 +54,10 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     // display: "flex",
-    background: "pink",
+    background: "skyblue",
     // background: "linear-gradient(45deg, blue 5%, skyblue 90%)",
+    backgroundImage: `url(${aquaImage})`,
+    height: '100%'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -61,6 +76,8 @@ const useStyles = makeStyles((theme) => ({
   },
   mainGrid: {
     marginTop: theme.spacing(3),
+    paddingLeft: "15%",
+    paddingRight: "15%", 
     // backgroundColor: 'grey'
   },
   fab: {
@@ -83,9 +100,13 @@ const useStyles = makeStyles((theme) => ({
       left: theme.spacing(2),
     },
     exampleWrapper: {
-      position: 'relative',
+      position: "relative",
       marginTop: theme.spacing(3),
       height: 380,
+    },
+    topBoard: {
+      variant: "h5",
+      align: "center",
     },
   },
 }));
@@ -183,8 +204,13 @@ const UserConsole = ({ history }) => {
 
       <div className={classes.paper}>
         <Grid container spacing={3} className={classes.mainGrid}>
-          <Grid item xs={12} style={{ backgroundColor: "red" }}>
-            <Typography variant="h5">
+          <Grid item xs={12} style={{ backgroundColor: "skyblue" }}>
+            <Typography
+              className={classes.topBoard}
+              align="center"
+              gutterBottom
+              variant="h5"
+            >
               {nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다!
             </Typography>
           </Grid>
@@ -214,10 +240,12 @@ const UserConsole = ({ history }) => {
               ></CardMedia>
 
               <CardContent>
-                <Typography>오늘의 목표 : {goal} ml</Typography>
-                <Typography>현재까지 마신 물 : {intake} ml</Typography>
-                <Typography> 물 추가하기</Typography>
-                <div>
+                <Typography variant="h6">오늘의 목표 : {goal} ml</Typography>
+                <Typography variant="h6">
+                  현재까지 마신 물 : {intake} ml
+                </Typography>
+                <Typography variant="h6"> 물 추가하기</Typography>
+                <div >
                   <Autocomplete
                     options={cups}
                     getOptionLabel={(option) => option.ml}
@@ -280,7 +308,7 @@ const UserConsole = ({ history }) => {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography paragraph>
+            {/* <Typography paragraph>
               This being human is a guest house. Every morning a new arrival. A
               joy, a depression, a meanness, some momentary awareness comes as
               an unexpected visitor. Welcome and entertain them all! Even if
@@ -290,7 +318,7 @@ const UserConsole = ({ history }) => {
               shame, the malice, meet them at the door laughing, and invite them
               in. Be grateful for whoever comes, because each has been sent as a
               guide from beyond.
-            </Typography>
+            </Typography> */}
           </Grid>
         </Grid>
       </div>

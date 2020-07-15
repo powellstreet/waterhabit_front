@@ -19,6 +19,8 @@ import MainBar from "./MainBar";
 import LeftDrawer from "./LeftDrawer";
 import FloatButton from "./FloatButton";
 import SpeedDialButton from "./SpeedDialButton";
+import aquaImage from "../images/aquablue.jpg";
+
 
 dotenv.config();
 
@@ -28,11 +30,13 @@ const useStyles = makeStyles((theme) => ({
     // display: "flex",
     // flexDirection: "column",
     alignItems: "center",
-    backgroundColor: 'blue',
+    // backgroundColor: 'blue',
     height: '100%'
   },
   root: {
     // display: "flex",
+    backgroundImage: `url(${aquaImage})`,
+    height: '100%'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -60,6 +64,8 @@ const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
     // backgroundColor: 'grey'
+    paddingLeft: '15%',
+    paddingRight: '15%'
   },
   stampGrid : {
     marginTop: theme.spacing(3),
@@ -133,12 +139,12 @@ const UserRecords = ({ history }) => {
             <div>
               <div>{nickname}님 화이팅입니다</div>
               <div>날짜 : {day}, 성공일수 : {yesDays}</div>
-              <FormGroup>
+              {/* <FormGroup>
                 <FormControlLabel
                   control={<Switch onChange={handleStampType} />}
                   label={stampType ? "stamp" : "chart"}
                 />
-              </FormGroup>
+              </FormGroup> */}
             </div>
           </Grid>
         </Grid>
