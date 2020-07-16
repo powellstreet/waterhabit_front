@@ -69,8 +69,8 @@ const useStyles = makeStyles((theme) => ({
   },
   stampGrid : {
     marginTop: theme.spacing(3),
-    paddingLeft: '15%',
-    paddingRight: '15%'
+    paddingLeft: '25%',
+    paddingRight: '25%'
   }
 }));
 

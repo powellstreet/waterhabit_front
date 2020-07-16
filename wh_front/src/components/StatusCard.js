@@ -1,4 +1,6 @@
 import React from "react";
+import { useSelector } from "react-redux";
+
 import {
   Typography,
   Card,
@@ -20,6 +22,10 @@ const useStyles = makeStyles((theme) => ({
 const StatusCard = ({ status }) => {
   const classes = useStyles();
   let statusObj = {};
+  let { goal, intake } = useSelector((state) => ({
+    goal: state.goal,
+    intake: state.intake,
+  }));
 
   if (status === 0) {
     statusObj.comment = "물 한 잔으로 하루를 시작해보세요!";
@@ -31,7 +37,7 @@ const StatusCard = ({ status }) => {
     statusObj.comment = "벌컥벌컥 어느덧 절반!";
     statusObj.background = "#7ECBF0";
   } else if (50 <= status && status < 75) {
-    statusObj.comment = "잘 하고 있군요!피부도 좋아할 거예요!";
+    statusObj.comment = "잘 하고 있군요! 피부도 좋아할 거예요!";
     statusObj.background = "#51B7E8";
   } else if (75 <= status && status < 100) {
     statusObj.comment = "거의 다 왔네요! 한컵만 더?";
@@ -41,7 +47,7 @@ const StatusCard = ({ status }) => {
     statusObj.background = "#069DE6";
   } else {
     statusObj.comment = "이게 난이예요 난";
-    statusObj.background = "ivory";
+    statusObj.background = "#CDE8F5";
   }
   return (
     <Card style={{ background: statusObj.background }}>
@@ -51,8 +57,15 @@ const StatusCard = ({ status }) => {
         className={classes.media}
       ></CardMedia>
       <CardContent>
-        <Typography variant="h2" align="center">{status} %</Typography>
-        <Typography variant="h5" align="center">{statusObj.comment}</Typography>
+        <Typography variant="h2" align="center">
+          {status} %
+        </Typography>
+        <Typography variant="h6" align="center">
+          {intake} / {goal} ml
+        </Typography>
+        <Typography variant="h5" align="center">
+          {statusObj.comment}
+        </Typography>
       </CardContent>
     </Card>
   );

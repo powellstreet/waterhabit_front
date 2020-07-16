@@ -56,8 +56,8 @@ const useStyles = makeStyles((theme) => ({
     // display: "flex",
     background: "skyblue",
     // background: "linear-gradient(45deg, blue 5%, skyblue 90%)",
-    backgroundImage: `url(${aquaImage})`,
-    height: '100%'
+    // backgroundImage: `url(${aquaImage})`,
+    height: "100%",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
   mainGrid: {
     marginTop: theme.spacing(3),
     paddingLeft: "15%",
-    paddingRight: "15%", 
+    paddingRight: "15%",
     // backgroundColor: 'grey'
   },
   fab: {
@@ -207,18 +207,18 @@ const UserConsole = ({ history }) => {
           <Grid item xs={12} style={{ backgroundColor: "skyblue" }}>
             <Typography
               className={classes.topBoard}
-              align="center"
+              align="right"
               gutterBottom
               variant="h5"
             >
               {nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다!
             </Typography>
           </Grid>
-          <Grid item xs={12} style={{ backgroundColor: "white" }}>
+          {/* <Grid item xs={12} style={{ backgroundColor: "white" }}>
             <div>
               <Box display="flex" alignItems="center">
                 <Box width="100%" mr={1}>
-                  {/* <LinearProgress variant="determinate" /> */}
+                  <LinearProgress variant="determinate" />
                 </Box>
                 <Box minWidth={35}>
                   <Typography
@@ -228,24 +228,39 @@ const UserConsole = ({ history }) => {
                 </Box>
               </Box>
             </div>
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={6} style={{ backgroundColor: "gold" }}>
-            <Card>
-              {/* <CardActionArea> */}
+          <Grid item xs={12} style={{ backgroundColor: "skyblue" }}>
+            <StatusCard status={ratio} />
+            {/* <Card>
               <CardMedia
                 image="../images/sample.png"
                 title="Contemplative Reptile"
                 className={classes.media}
               ></CardMedia>
+              <CardContent>
+                <Typography>오늘의 목표 달성률 : {ratio} %</Typography>
+                <StatusCard status={ratio} />
+              </CardContent>
+            </Card> */}
+          </Grid>
+
+          <Grid item xs={6} style={{ backgroundColor: "skyblue" }}>
+            <Card>
+              {/* <CardActionArea> */}
+              {/* <CardMedia
+                image="../images/sample.png"
+                title="Contemplative Reptile"
+                className={classes.media}
+              ></CardMedia> */}
 
               <CardContent>
-                <Typography variant="h6">오늘의 목표 : {goal} ml</Typography>
-                <Typography variant="h6">
+                {/* <Typography variant="h6">{intake} ml / {goal} ml</Typography> */}
+                {/* <Typography variant="h6">
                   현재까지 마신 물 : {intake} ml
-                </Typography>
+                </Typography> */}
                 <Typography variant="h6"> 물 추가하기</Typography>
-                <div >
+                <div>
                   <Autocomplete
                     options={cups}
                     getOptionLabel={(option) => option.ml}
@@ -274,26 +289,13 @@ const UserConsole = ({ history }) => {
 
           {/* AutoComplete 사용해서 추가하는 물 양 선택할 수 있도록 수정하기 */}
 
-          <Grid item xs={6} style={{ backgroundColor: "orange" }}>
-            <StatusCard status={ratio} />
-            {/* <Card>
-              <CardMedia
-                image="../images/sample.png"
-                title="Contemplative Reptile"
-                className={classes.media}
-              ></CardMedia>
-              <CardContent>
-                <Typography>오늘의 목표 달성률 : {ratio} %</Typography>
-                <StatusCard status={ratio} />
-              </CardContent>
-            </Card> */}
-          </Grid>
-
           {/* <Grid item xs={6} ></Grid> */}
-          <Grid item xs={12} style={{ backgroundColor: "white" }}>
+          <Grid item xs={6} style={{ backgroundColor: "skyblue" }}>
             <Card>
               <CardContent>
-                <div>
+              <Typography variant="h6"> Hopppip</Typography>
+
+                {/* <div>
                   <div
                     style={{
                       background:
@@ -302,7 +304,7 @@ const UserConsole = ({ history }) => {
                       height: 100,
                     }}
                   ></div>
-                </div>
+                </div> */}
               </CardContent>
             </Card>
           </Grid>
