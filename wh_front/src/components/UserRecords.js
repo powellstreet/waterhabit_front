@@ -19,7 +19,11 @@ import MainBar from "./MainBar";
 import LeftDrawer from "./LeftDrawer";
 import FloatButton from "./FloatButton";
 import SpeedDialButton from "./SpeedDialButton";
+import RecordCards from "./RecordCards";
+import RecordsGraph from "./RecordsGraph";
+
 import aquaImage from "../images/aquablue.jpg";
+
 
 
 dotenv.config();
@@ -139,12 +143,12 @@ const UserRecords = ({ history }) => {
             <div>
               <div>{nickname}님 화이팅입니다</div>
               <div>날짜 : {day}, 성공일수 : {yesDays}</div>
-              {/* <FormGroup>
+              <FormGroup>
                 <FormControlLabel
                   control={<Switch onChange={handleStampType} />}
                   label={stampType ? "stamp" : "chart"}
                 />
-              </FormGroup> */}
+              </FormGroup>
             </div>
           </Grid>
         </Grid>
@@ -176,6 +180,7 @@ const UserRecords = ({ history }) => {
             );
           })}
         </Grid>
+        { stampType === 'stamp'? <RecordCards/> : <RecordsGraph/>}
       </div>
       {/* <FloatButton toggleDrawer={toggleDrawer} /> */}
       {/* <SpeedDialButton /> */}
