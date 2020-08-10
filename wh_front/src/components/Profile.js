@@ -181,14 +181,14 @@ const Profile = ({ history }) => {
             >
               Go BACK
             </Button>
-            <Button
+            {/* <Button
               name="drawerButton"
               color="primary"
               variant="outlined"
               onClick={toggleDrawer(true)}
             >
               Menu
-            </Button>
+            </Button> */}
           </div>
         </form>
       </div>

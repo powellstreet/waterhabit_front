@@ -43,6 +43,8 @@ import LeftDrawer from "./LeftDrawer";
 import FloatButton from "./FloatButton";
 import StatusCard from "./StatusCard";
 import SpeedDialButton from "./SpeedDialButton";
+import Stamp from "./Stamp";
+
 dotenv.config();
 
 const useStyles = makeStyles((theme) => ({
@@ -207,9 +209,9 @@ const UserConsole = ({ history }) => {
           <Grid item xs={12} style={{ backgroundColor: "skyblue" }}>
             <Typography
               className={classes.topBoard}
-              align="right"
+              align="left"
               gutterBottom
-              variant="h5"
+              variant="h4"
             >
               {nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다!
             </Typography>
@@ -293,7 +295,10 @@ const UserConsole = ({ history }) => {
           <Grid item xs={6} style={{ backgroundColor: "skyblue" }}>
             <Card>
               <CardContent>
-              <Typography variant="h6"> Hopppip</Typography>
+              {/* 최근 7일 기록 보여주는 카드 추가하기 */}
+              <Typography variant="h6"> space for 7 days cards</Typography>
+              <Stamp intake={3200} />
+              <Stamp intake={3200} />
 
                 {/* <div>
                   <div
@@ -307,20 +312,6 @@ const UserConsole = ({ history }) => {
                 </div> */}
               </CardContent>
             </Card>
-          </Grid>
-
-          <Grid item xs={12}>
-            {/* <Typography paragraph>
-              This being human is a guest house. Every morning a new arrival. A
-              joy, a depression, a meanness, some momentary awareness comes as
-              an unexpected visitor. Welcome and entertain them all! Even if
-              they’re a crowd of sorrows, who violently sweep your house empty
-              of its furniture, still, treat each guest honorably. He may be
-              clearing you out for some new delight. The dark thought, the
-              shame, the malice, meet them at the door laughing, and invite them
-              in. Be grateful for whoever comes, because each has been sent as a
-              guide from beyond.
-            </Typography> */}
           </Grid>
         </Grid>
       </div>
