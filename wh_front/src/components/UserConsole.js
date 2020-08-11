@@ -136,6 +136,9 @@ const UserConsole = ({ history }) => {
   const [addIntake, setAddIntake] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  const [records, setRecords] = useState([]);
+  const [yesDays, setYesDays] = useState(0);
+
   const cups = [
     { ml: "200ml" },
     { ml: "250ml (잔)" },
@@ -192,6 +195,22 @@ const UserConsole = ({ history }) => {
         // dispatch({ type: "intake", intake: res.data.instance.intake })
         dispatch({ type: "intake", intake: 0 })
       );
+  }, []);
+
+  useEffect(() => {
+    axios
+      .post(`http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`, {
+        userId,
+      })
+      .then((res) => {
+        let record = [];
+        for (let i = 0; i < day; i++) {
+          res.data[i] ? (record[i] = res.data[i].intake) : (record[i] = 0);
+        }
+        dispatch({ type: "record", record })
+        setRecords(record.slice(record.length - 8, record.length - 1));
+        setYesDays(res.data.filter((el) => el.intake >= goal).length);
+      });
   }, []);
 
   return (
@@ -295,10 +314,30 @@ const UserConsole = ({ history }) => {
           <Grid item xs={6} style={{ backgroundColor: "skyblue" }}>
             <Card>
               <CardContent>
-              {/* 최근 7일 기록 보여주는 카드 추가하기 */}
-              <Typography variant="h6"> space for 7 days cards</Typography>
-              <Stamp intake={3200} />
-              <Stamp intake={3200} />
+                <Typography variant="h6"> space for 7 days cards</Typography>
+                {/* <Stamp intake={3200} />
+              <Stamp intake={3200} /> */}
+                {records.map((el, idx) => {
+                  return el >= goal ? (
+                    <Grid
+                      item
+                      xs={1}
+                      spacing={5}
+                      style={{ backgroundColor: "skyblue" }}
+                    >
+                      <Stamp key={idx} day={idx + 1} intake={el} />
+                    </Grid>
+                  ) : (
+                    <Grid
+                      item
+                      xs={1}
+                      spacing={5}
+                      style={{ backgroundColor: "orange" }}
+                    >
+                      <Stamp key={idx} intake={el} />
+                    </Grid>
+                  );
+                })}
 
                 {/* <div>
                   <div

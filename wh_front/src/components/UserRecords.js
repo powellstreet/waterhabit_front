@@ -97,12 +97,13 @@ const UserRecords = ({ history }) => {
     setDrawerOpen(bln);
   };
 
-  const { userId, nickname, stamp, day } = useSelector((state) => ({
+  const { userId, nickname, stamp, day, record } = useSelector((state) => ({
     userId: state.userId,
     nickname: state.nickname,
     stamp: state.stamp,
     // goal: state.goal,
     day: state.day,
+    record: state.record
   }));
 
   const handleStampType = (e) => {
@@ -158,7 +159,7 @@ const UserRecords = ({ history }) => {
           justify="center"
           className={classes.stampGrid}
         >
-          {records.map((el, idx) => {
+          {record.map((el, idx) => {
             return el >= goal ? (
               <Grid
                 item
