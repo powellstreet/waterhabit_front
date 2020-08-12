@@ -79,11 +79,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const UserRecords = ({ history }) => {
-  // const [records, setRecords] = useState([]);
-  // const [yesDays, setYesDays] = useState(0);
-  const records = [2000, 3000, 3000, 3000, 3000, 3000, 3000, 3000, 30, 5000, 3000, 3000, 30, 5000, 3000, 3000, 30, 5000, 3000, 3000, 30, 5000];
-  const yesDays = 10;
-  const goal = 2000
 
   const [stampType, setStampType] = useState("stamp");
   const classes = useStyles();
@@ -97,36 +92,19 @@ const UserRecords = ({ history }) => {
     setDrawerOpen(bln);
   };
 
-  const { userId, nickname, stamp, day, record } = useSelector((state) => ({
+  const { userId, nickname, stamp, goal, day, record, yesDays } = useSelector((state) => ({
     userId: state.userId,
     nickname: state.nickname,
     stamp: state.stamp,
-    // goal: state.goal,
+    goal: state.goal,
     day: state.day,
-    record: state.record
+    record: state.record,
+    yesDays: state.yesDays,
   }));
 
   const handleStampType = (e) => {
     setStampType(e.target.checked);
   };
-
-  // 작업하는 동안만 주석화!
-  // useEffect(() => {
-  //   axios
-  //     .post(`http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`, {
-  //       userId,
-  //     })
-  //     .then((res) => {
-  //       let rc = [];
-  //       for (let i = 0; i < day; i++) {
-  //         res.data[i] ? (rc[i] = res.data[i].intake) : (rc[i] = 0);
-  //       }
-  //       setRecords(rc);
-  //       setYesDays(res.data.filter(el => el.intake >= goal).length);
-  //       console.log(rc);
-  //       console.log('this is resdata : ', res.data);
-  //     });
-  // }, []);
 
   return (
     <div className={classes.root}>
@@ -184,7 +162,6 @@ const UserRecords = ({ history }) => {
         { stampType === 'stamp'? <RecordCards/> : <RecordsGraph/>}
       </div>
       {/* <FloatButton toggleDrawer={toggleDrawer} /> */}
-      {/* <SpeedDialButton /> */}
     </div>
   );
 };

@@ -54,6 +54,11 @@ export default createStore((state, action) => {
       record: action.record,
     });
   }
+  if (action.type === "yesDays") {
+    return Object.assign({}, state, {
+      yesDays: action.yesDays,
+    });
+  }  
   if (action.type === "isLogin") {
     if (action.isLogin === undefined) {
         return Object.assign({}, { isLogin: false })

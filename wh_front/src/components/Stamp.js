@@ -16,6 +16,8 @@ const Stamp = ({ day, intake }) => {
       {intake > goal ? (
         <div>
           <Typography>DAY {day}</Typography>
+          <Typography> {intake} ml</Typography>
+
           <IconButton color="inherit">
             <LocalDrink />
           </IconButton>
@@ -23,6 +25,7 @@ const Stamp = ({ day, intake }) => {
       ) : (
         <div>
           <Typography>DAY {day}</Typography>
+          <Typography> {intake} ml</Typography>
           <IconButton color="inherit">
             <Close />
           </IconButton>

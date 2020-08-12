@@ -110,6 +110,11 @@ const useStyles = makeStyles((theme) => ({
       variant: "h5",
       align: "center",
     },
+    stampGrid : {
+      marginTop: theme.spacing(3),
+      paddingLeft: '25%',
+      paddingRight: '25%'
+    }
   },
 }));
 
@@ -125,19 +130,20 @@ const UserConsole = ({ history }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  let { nickname, intake, goal, day, userId } = useSelector((state) => ({
-    nickname: state.nickname,
-    intake: state.intake,
-    goal: state.goal,
-    day: state.day,
-    userId: state.userId,
-  }));
+  let { nickname, intake, goal, day, userId, yesDays } = useSelector(
+    (state) => ({
+      nickname: state.nickname,
+      intake: state.intake,
+      goal: state.goal,
+      day: state.day,
+      userId: state.userId,
+      yesDays: state.yesDays,
+    })
+  );
 
   const [addIntake, setAddIntake] = useState(0);
   const [drawerOpen, setDrawerOpen] = useState(false);
-
   const [records, setRecords] = useState([]);
-  const [yesDays, setYesDays] = useState(0);
 
   const cups = [
     { ml: "200ml" },
@@ -185,32 +191,38 @@ const UserConsole = ({ history }) => {
 
   useEffect(() => {
     axios
-      .post(
-        `http://localhost:${process.env.REACT_APP_PORT}/records/checkIntake`,
-        { userId, day }
-      )
-      // .then((res) => console.log(res.data))
-      .then((res) =>
-        // userConsole 할때만 잠깐 수정!
-        // dispatch({ type: "intake", intake: res.data.instance.intake })
-        dispatch({ type: "intake", intake: 0 })
-      );
-  }, []);
+      .all([
+        axios.post(
+          `http://localhost:${process.env.REACT_APP_PORT}/records/checkIntake`,
+          { userId, day }
+        ),
+        axios.post(
+          `http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`,
+          {
+            userId,
+          }
+        ),
+      ])
+      .then(
+        axios.spread((intakeData, recordData) => {
+          dispatch({ type: "intake", intake: intakeData.data.instance.intake });
 
-  useEffect(() => {
-    axios
-      .post(`http://localhost:${process.env.REACT_APP_PORT}/records/getStamp`, {
-        userId,
-      })
-      .then((res) => {
-        let record = [];
-        for (let i = 0; i < day; i++) {
-          res.data[i] ? (record[i] = res.data[i].intake) : (record[i] = 0);
-        }
-        dispatch({ type: "record", record })
-        setRecords(record.slice(record.length - 8, record.length - 1));
-        setYesDays(res.data.filter((el) => el.intake >= goal).length);
-      });
+          let record = []; record.length = day; record.fill(0);
+          for (let i = 0; i < recordData.data.length; i++) {
+            record[recordData.data[i].day] = recordData.data[i].intake;
+          }
+
+
+          console.log(recordData.data)
+          console.log('this is rc', day, record)
+          dispatch({ type: "record", record });
+          dispatch({
+            type: "yesDays",
+            yesDays: recordData.data.filter((el) => el.intake >= goal).length,
+          });
+          setRecords(record.slice(record.length - 8, record.length - 1));
+        })
+      );
   }, []);
 
   return (
@@ -232,7 +244,8 @@ const UserConsole = ({ history }) => {
               gutterBottom
               variant="h4"
             >
-              {nickname}님 안녕하세요! 목표까지 {100 - day}일 남았습니다!
+              도전 {day}일째, {nickname}님 오늘도 한잔하셨나요? 성공일수는{" "}
+              {yesDays}일!
             </Typography>
           </Grid>
           {/* <Grid item xs={12} style={{ backgroundColor: "white" }}>
@@ -253,17 +266,6 @@ const UserConsole = ({ history }) => {
 
           <Grid item xs={12} style={{ backgroundColor: "skyblue" }}>
             <StatusCard status={ratio} />
-            {/* <Card>
-              <CardMedia
-                image="../images/sample.png"
-                title="Contemplative Reptile"
-                className={classes.media}
-              ></CardMedia>
-              <CardContent>
-                <Typography>오늘의 목표 달성률 : {ratio} %</Typography>
-                <StatusCard status={ratio} />
-              </CardContent>
-            </Card> */}
           </Grid>
 
           <Grid item xs={6} style={{ backgroundColor: "skyblue" }}>
@@ -308,36 +310,41 @@ const UserConsole = ({ history }) => {
             </Card>
           </Grid>
 
-          {/* AutoComplete 사용해서 추가하는 물 양 선택할 수 있도록 수정하기 */}
-
-          {/* <Grid item xs={6} ></Grid> */}
           <Grid item xs={6} style={{ backgroundColor: "skyblue" }}>
             <Card>
               <CardContent>
-                <Typography variant="h6"> space for 7 days cards</Typography>
-                {/* <Stamp intake={3200} />
-              <Stamp intake={3200} /> */}
-                {records.map((el, idx) => {
-                  return el >= goal ? (
-                    <Grid
-                      item
-                      xs={1}
-                      spacing={5}
-                      style={{ backgroundColor: "skyblue" }}
-                    >
-                      <Stamp key={idx} day={idx + 1} intake={el} />
-                    </Grid>
-                  ) : (
-                    <Grid
-                      item
-                      xs={1}
-                      spacing={5}
-                      style={{ backgroundColor: "orange" }}
-                    >
-                      <Stamp key={idx} intake={el} />
-                    </Grid>
-                  );
-                })}
+                <Typography variant="h6">
+                  {" "}
+                  {nickname}님의 최근 7일 기록
+                </Typography>
+                <Grid
+                  container
+                  spacing={3}
+                  justify="center"
+                  className={classes.stampGrid}
+                >
+                  {records.map((el, idx) => {
+                    return el >= goal ? (
+                      <Grid
+                        item
+                        xs={1}
+                        spacing={5}
+                        style={{ backgroundColor: "skyblue" }}
+                      >
+                        <Stamp key={idx} day={idx + 1} intake={el} />
+                      </Grid>
+                    ) : (
+                      <Grid
+                        item
+                        xs={1}
+                        spacing={5}
+                        style={{ backgroundColor: "orange" }}
+                      >
+                        <Stamp key={idx} day={idx + 1} intake={el} />
+                      </Grid>
+                    );
+                  })}
+                </Grid>
 
                 {/* <div>
                   <div
@@ -355,7 +362,6 @@ const UserConsole = ({ history }) => {
         </Grid>
       </div>
       {/* <FloatButton toggleDrawer={toggleDrawer} /> */}
-      {/* <SpeedDialButton /> */}
     </div>
   );
 };
